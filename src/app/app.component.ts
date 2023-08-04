@@ -1,5 +1,4 @@
 import { Component } from '@angular/core';
-import { NotificationService } from './services/notification.service';
 
 @Component({
   selector: 'app-root',
@@ -8,10 +7,5 @@ import { NotificationService } from './services/notification.service';
 })
 export class AppComponent {
   title = 'ToDoListApp';
-  constructor(notification: NotificationService) {
-    notification.showInfo('Works', 'Toastr Works');
-    notification.showSuccess('Works', 'Toastr Works');
-    notification.showWarning('Works', 'Toastr Works');
-    notification.showError('Works', 'Toastr Works');
-  }
+  constructor() {}
 }

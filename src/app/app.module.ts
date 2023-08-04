@@ -5,16 +5,11 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { AppMaterialModuleModule } from './material-module/material-module.module';
 import { ToastrModule } from 'ngx-toastr';
-import { DoneTasksComponent } from './components/tasks/done-tasks/done-tasks.component';
-import { ToDoTasksComponent } from './components/tasks/to-do-tasks/to-do-tasks.component';
 import { TaskFormComponent } from './components/tasks/task-form/task-form.component';
+import { StoreModule } from '@ngrx/store';
+
 @NgModule({
-  declarations: [
-    AppComponent,
-    DoneTasksComponent,
-    ToDoTasksComponent,
-    TaskFormComponent,
-  ],
+  declarations: [AppComponent, TaskFormComponent],
   imports: [
     BrowserModule,
     AppRoutingModule,
@@ -23,6 +18,7 @@ import { TaskFormComponent } from './components/tasks/task-form/task-form.compon
       tapToDismiss: true,
       disableTimeOut: true,
     }),
+    //StoreModule.forRoot({}, {}),
   ],
   providers: [],
   bootstrap: [AppComponent],

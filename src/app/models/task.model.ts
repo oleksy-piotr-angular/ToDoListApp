@@ -1,7 +1,8 @@
-export interface TaskState {
+export interface Task {
+  id: string;
   title: string;
   description: string;
   startDate?: Date;
   doneDate?: Date;
-  isDone: boolean;
+  isDone: false | true;
 }
