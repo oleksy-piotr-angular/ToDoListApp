@@ -2,8 +2,8 @@
   background-color: rgb(0, 172, 86);
   color: white;
 }
-.mat-button {
-  color: white;
+.menu-button {
+  color: black;
 }
 .spacer {
   flex: 1 1 auto;
