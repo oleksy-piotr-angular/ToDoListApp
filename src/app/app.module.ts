@@ -12,6 +12,7 @@ import { DoneTasksComponent } from './components/tasks/done-tasks/done-tasks.com
 import { tasksReducer } from './components/tasks/state/tasks.reducer';
 import { AppRoutingModule } from './app-routing.module';
 import { HeaderComponent } from './shared/components/header/header.component';
+import { appReducer } from './store/app.state';
 
 @NgModule({
   declarations: [
@@ -29,7 +30,7 @@ import { HeaderComponent } from './shared/components/header/header.component';
       tapToDismiss: true,
       disableTimeOut: true,
     }),
-    StoreModule.forRoot({ tasks: tasksReducer }),
+    StoreModule.forRoot(appReducer),
     StoreDevtoolsModule.instrument({
       maxAge: 25,
       logOnly: false,
