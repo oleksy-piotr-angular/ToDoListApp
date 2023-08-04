@@ -1,6 +1,9 @@
 import { Component, OnInit } from '@angular/core';
-import { Store } from '@ngrx/store';
 import { Task } from 'src/app/models/task.model';
+import { TasksState } from '../state/tasks.state';
+import { Store } from '@ngrx/store';
+import { Observable } from 'rxjs';
+import { getTasks } from '../state/tasks.selector';
 
 @Component({
   selector: 'app-to-do-tasks',
@@ -8,10 +11,10 @@ import { Task } from 'src/app/models/task.model';
   styleUrls: ['./to-do-tasks.component.css'],
 })
 export class ToDoTasksComponent implements OnInit {
-  tasks: Task[] = [];
-  constructor() {}
+  tasks$: Observable<Task[]> = new Observable<[]>();
+  constructor(private store: Store<{ tasks: TasksState }>) {}
 
   ngOnInit(): void {
-    throw new Error('Method not implemented.');
+    this.tasks$ = this.store.select(getTasks);
   }
 }
