@@ -1,7 +1,4 @@
-<h1>{{ title }}</h1>
+<app-header [title]="title"></app-header>
 <button mat-raised-button>Hello World</button>
-<button mat-raised-button routerLink="/done-tasks">Done-Tasks-List</button>
-<button mat-raised-button routerLink="/to-do-tasks">To do tasks List</button>
-<!-- <router-outlet></router-outlet> -->
-<app-done-tasks></app-done-tasks>
-<app-to-do-tasks></app-to-do-tasks>
+
+<router-outlet></router-outlet>
