@@ -1,2 +1,10 @@
-<p>to-do-tasks works!</p>
-<p>Tasks: {{ tasks$ | async }}</p>
+<mat-card>
+  <mat-card-content>
+    <mat-list *ngIf="tasks$ | async as tasks">
+      <mat-list-item *ngFor="let task of tasks">
+        <span matListItemTitle>{{ task.title }}</span>
+        <span matListItemLine>{{ task.description }}</span>
+      </mat-list-item>
+    </mat-list>
+  </mat-card-content>
+</mat-card>
