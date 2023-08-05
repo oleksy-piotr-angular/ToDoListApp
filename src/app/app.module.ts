@@ -15,6 +15,7 @@ import { HeaderComponent } from './shared/components/header/header.component';
 import { appReducer } from './store/app.state';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { ReactiveFormsModule } from '@angular/forms';
+import { EditTaskComponent } from './components/tasks/edit-task/edit-task.component';
 
 @NgModule({
   declarations: [
@@ -23,6 +24,7 @@ import { ReactiveFormsModule } from '@angular/forms';
     ToDoTasksComponent,
     DoneTasksComponent,
     HeaderComponent,
+    EditTaskComponent,
   ],
   imports: [
     BrowserModule,
