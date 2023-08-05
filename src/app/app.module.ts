@@ -9,10 +9,12 @@ import { StoreModule } from '@ngrx/store';
 import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 import { ToDoTasksComponent } from './components/tasks/to-do-tasks/to-do-tasks.component';
 import { DoneTasksComponent } from './components/tasks/done-tasks/done-tasks.component';
-import { tasksReducer } from './components/tasks/state/tasks.reducer';
+
 import { AppRoutingModule } from './app-routing.module';
 import { HeaderComponent } from './shared/components/header/header.component';
 import { appReducer } from './store/app.state';
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { ReactiveFormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [
@@ -31,6 +33,7 @@ import { appReducer } from './store/app.state';
       disableTimeOut: true,
     }),
     StoreModule.forRoot(appReducer),
+    ReactiveFormsModule,
     StoreDevtoolsModule.instrument({
       maxAge: 25,
       logOnly: false,
@@ -40,6 +43,7 @@ import { appReducer } from './store/app.state';
         persist: true,
       },
     }),
+    NgbModule,
   ],
   providers: [],
   bootstrap: [AppComponent],

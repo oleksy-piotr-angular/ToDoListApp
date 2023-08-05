@@ -1,1 +1,33 @@
-<p>task-form works!</p>
+<h3 class="my-3">Add Task</h3>
+<hr />
+<mat-card [formGroup]="taskForm">
+  <mat-form-field>
+    <mat-label>Title</mat-label>
+    <input matInput formControlName="title" />
+    <!-- ShowTitleErrors -->
+    <div *ngIf="getTitleIsNotValid">
+      <mat-error>{{ showTitleErrors() }}</mat-error>
+    </div>
+    <!-- ShowTitleErrors END-->
+  </mat-form-field>
+  <mat-form-field>
+    <mat-label>Textarea</mat-label>
+    <textarea matInput formControlName="description"></textarea>
+    <!-- ShowTitleErrors -->
+    <div *ngIf="getDescriptionIsNotValid">
+      <mat-error> {{ showDescriptionErrors() }}</mat-error>
+    </div>
+    <!-- ShowTitleErrors END-->
+  </mat-form-field>
+  <div class="my-3">
+    <button
+      [disabled]="!getTaskFormIsValid"
+      type="submit"
+      mat-raised-button
+      color="accent"
+      (click)="onAddTask()"
+    >
+      Create
+    </button>
+  </div>
+</mat-card>
