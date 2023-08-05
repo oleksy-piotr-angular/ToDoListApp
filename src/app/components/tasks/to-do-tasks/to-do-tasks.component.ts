@@ -5,6 +5,7 @@ import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
 import { getTasksToDo } from '../state/tasks.selector';
 import { AppState } from 'src/app/store/app.state';
+import { deleteTask } from '../state/tasks.actions';
 
 @Component({
   selector: 'app-to-do-tasks',
@@ -19,5 +20,11 @@ export class ToDoTasksComponent implements OnInit {
     this.tasks$ = this.store.select(getTasksToDo);
   }
 
-  onEdit() {}
+  onDeleteTask(id: number | undefined) {
+    if (confirm('This action will remove this Task Permanently. Continue?')) {
+      if (id) {
+        this.store.dispatch(deleteTask({ id }));
+      }
+    }
+  }
 }

@@ -13,7 +13,10 @@
             <span matListItemTitle>{{ task.id }}: {{ task.title }}</span>
             <span matListItemLine>{{ task.description }}</span>
             <button mat-icon-button [routerLink]="['edit', task.id]">
-              <mat-icon>edit</mat-icon>
+              <mat-icon class="blue-icon">edit</mat-icon>
+            </button>
+            <button mat-icon-button (click)="onDeleteTask(task.id)">
+              <mat-icon class="red-icon">delete_forever</mat-icon>
             </button>
           </mat-list-item>
         </mat-selection-list>
