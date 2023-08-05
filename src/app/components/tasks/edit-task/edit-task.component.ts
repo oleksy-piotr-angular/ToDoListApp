@@ -5,12 +5,13 @@ import {
   FormGroup,
   Validators,
 } from '@angular/forms';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Store } from '@ngrx/store';
 import { Task } from 'src/app/models/task.model';
 import { AppState } from 'src/app/store/app.state';
 import { getTaskById } from '../state/tasks.selector';
 import { Subscription } from 'rxjs';
+import { updateTask } from '../state/tasks.actions';
 
 @Component({
   selector: 'app-edit-task',
@@ -30,7 +31,8 @@ export class EditTaskComponent implements OnDestroy {
   constructor(
     private route: ActivatedRoute,
     private fb: FormBuilder,
-    private store: Store<AppState>
+    private store: Store<AppState>,
+    private router: Router
   ) {
     this.route.paramMap.subscribe((params) => {
       const id = params.get('id')!;
@@ -38,6 +40,7 @@ export class EditTaskComponent implements OnDestroy {
         .select(getTaskById, { id })
         .subscribe((data) => {
           this.task = data;
+
           this.createForm();
         });
     });
@@ -112,7 +115,18 @@ export class EditTaskComponent implements OnDestroy {
 
   onEditTask() {
     if (this.taskForm.valid) {
-      console.log(this.taskForm.value);
+      const title = this.taskForm.value.title;
+      const description = this.taskForm.value.description;
+
+      const task: Task = {
+        id: this.task!.id,
+        title,
+        description,
+        isDone: this.task?.isDone,
+      };
+
+      this.store.dispatch(updateTask({ task }));
+      this.router.navigate(['todo-tasks']);
     }
   }
 }

@@ -9,6 +9,7 @@ import { Store } from '@ngrx/store';
 import { Task } from 'src/app/models/task.model';
 import { AppState } from 'src/app/store/app.state';
 import { addTask } from '../state/tasks.actions';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-task-form',
@@ -20,7 +21,11 @@ export class TaskFormComponent {
     title: FormControl<string>;
     description: FormControl<string>;
   }>;
-  constructor(private fb: FormBuilder, private store: Store<AppState>) {
+  constructor(
+    private fb: FormBuilder,
+    private store: Store<AppState>,
+    private router: Router
+  ) {
     this.taskForm = this.fb.group({
       title: this.fb.nonNullable.control(
         '',
@@ -83,7 +88,6 @@ export class TaskFormComponent {
 
   onAddTask() {
     if (this.taskForm.valid) {
-      console.log(this.taskForm.value);
       const task: Task = {
         title: this.taskForm.value.title ? this.taskForm.value.title : '',
         description: this.taskForm.value.description
@@ -93,6 +97,7 @@ export class TaskFormComponent {
       };
 
       this.store.dispatch(addTask({ task }));
+      this.router.navigate(['todo-tasks']);
     }
   }
 }
