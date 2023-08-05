@@ -1,41 +1,70 @@
-import { Component } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import {
   FormBuilder,
   FormControl,
   FormGroup,
   Validators,
 } from '@angular/forms';
+import { ActivatedRoute } from '@angular/router';
 import { Store } from '@ngrx/store';
 import { Task } from 'src/app/models/task.model';
 import { AppState } from 'src/app/store/app.state';
-import { addTask } from '../state/tasks.actions';
+import { getTaskById } from '../state/tasks.selector';
+import { Subscription } from 'rxjs';
 
 @Component({
-  selector: 'app-task-form',
-  templateUrl: './task-form.component.html',
-  styleUrls: ['./task-form.component.css'],
+  selector: 'app-edit-task',
+  templateUrl: './edit-task.component.html',
+  styleUrls: ['./edit-task.component.css'],
 })
-export class TaskFormComponent {
-  taskForm: FormGroup<{
-    title: FormControl<string>;
-    description: FormControl<string>;
+export class EditTaskComponent implements OnDestroy {
+  task: Task | undefined = undefined;
+
+  taskForm!: FormGroup<{
+    title: FormControl<string | undefined>;
+    description: FormControl<string | undefined>;
   }>;
-  constructor(private fb: FormBuilder, private store: Store<AppState>) {
+
+  taskSubscription: Subscription = new Subscription();
+
+  constructor(
+    private route: ActivatedRoute,
+    private fb: FormBuilder,
+    private store: Store<AppState>
+  ) {
+    this.route.paramMap.subscribe((params) => {
+      const id = params.get('id')!;
+      this.taskSubscription = this.store
+        .select(getTaskById, { id })
+        .subscribe((data) => {
+          this.task = data;
+          this.createForm();
+        });
+    });
+  }
+
+  createForm() {
     this.taskForm = this.fb.group({
-      title: this.fb.nonNullable.control(
-        '',
+      title: this.fb.nonNullable.control<string | undefined>(
+        this.task!.title,
         Validators.compose([Validators.required, Validators.minLength(5)])
       ),
       description: this.fb.nonNullable.control(
-        '',
+        this.task!.description,
         Validators.compose([Validators.required, Validators.minLength(10)])
       ),
     });
   }
 
+  ngOnDestroy(): void {
+    if (this.taskSubscription) {
+      this.taskSubscription.unsubscribe();
+    }
+  }
+
   get getTaskFormControl(): {
-    title: FormControl<string>;
-    description: FormControl<string>;
+    title: FormControl<string | undefined>;
+    description: FormControl<string | undefined>;
   } {
     return this.taskForm.controls;
   }
@@ -81,18 +110,9 @@ export class TaskFormComponent {
     }
   }
 
-  onAddTask() {
+  onEditTask() {
     if (this.taskForm.valid) {
       console.log(this.taskForm.value);
-      const task: Task = {
-        title: this.taskForm.value.title ? this.taskForm.value.title : '',
-        description: this.taskForm.value.description
-          ? this.taskForm.value.description
-          : '',
-        isDone: false,
-      };
-
-      this.store.dispatch(addTask({ task }));
     }
   }
 }

@@ -18,4 +18,6 @@ export class ToDoTasksComponent implements OnInit {
   ngOnInit(): void {
     this.tasks$ = this.store.select(getTasksToDo);
   }
+
+  onEdit() {}
 }

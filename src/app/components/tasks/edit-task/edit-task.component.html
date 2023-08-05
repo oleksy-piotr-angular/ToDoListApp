@@ -1,4 +1,4 @@
-<h3 class="my-3">Add Task</h3>
+<h3 class="my-3">Edit Task</h3>
 <hr />
 <mat-card [formGroup]="taskForm">
   <mat-form-field>
@@ -25,9 +25,9 @@
       type="submit"
       mat-raised-button
       color="accent"
-      (click)="onAddTask()"
+      (click)="onEditTask()"
     >
-      Create
+      Update
     </button>
   </div>
 </mat-card>

@@ -7,7 +7,7 @@ const _tasksReducer = createReducer(
   on(addTask, (state, action) => {
     let task = { ...action.task };
 
-    task.id = (state.tasks.length + 1).toString();
+    task.id = state.tasks.length + 1;
     return {
       ...state,
       tasks: [...state.tasks, task],
