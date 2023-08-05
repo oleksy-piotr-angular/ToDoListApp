@@ -1,10 +1,23 @@
-<mat-card>
-  <mat-card-content>
-    <mat-list *ngIf="tasks$ | async as tasks">
-      <mat-list-item *ngFor="let task of tasks">
-        <span matListItemTitle>{{ task.title }}</span>
-        <span matListItemLine>{{ task.description }}</span>
-      </mat-list-item>
-    </mat-list>
-  </mat-card-content>
-</mat-card>
+<div class="row">
+  <div class="col-md-8">
+    <h2 class="my-3">To Do Tasks:</h2>
+    <div>
+      <button mat-stroked-button color="primary" [routerLink]="['add']">
+        Create new Task
+      </button>
+    </div>
+    <mat-card>
+      <mat-card-content>
+        <mat-list *ngIf="tasks$ | async as tasks">
+          <mat-list-item *ngFor="let task of tasks">
+            <span matListItemTitle>{{ task.title }}</span>
+            <span matListItemLine>{{ task.description }}</span>
+          </mat-list-item>
+        </mat-list>
+      </mat-card-content>
+    </mat-card>
+  </div>
+  <div class="col-md-4">
+    <router-outlet></router-outlet>
+  </div>
+</div>

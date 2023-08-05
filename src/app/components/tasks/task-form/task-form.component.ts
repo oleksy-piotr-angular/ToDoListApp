@@ -1,8 +1,85 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
+import {
+  FormBuilder,
+  FormControl,
+  FormGroup,
+  Validators,
+} from '@angular/forms';
 
 @Component({
   selector: 'app-task-form',
   templateUrl: './task-form.component.html',
   styleUrls: ['./task-form.component.css'],
 })
-export class TaskFormComponent {}
+export class TaskFormComponent {
+  taskForm: FormGroup<{
+    title: FormControl<string>;
+    description: FormControl<string>;
+  }>;
+  constructor(private fb: FormBuilder) {
+    this.taskForm = this.fb.group({
+      title: this.fb.nonNullable.control(
+        '',
+        Validators.compose([Validators.required, Validators.minLength(5)])
+      ),
+      description: this.fb.nonNullable.control(
+        '',
+        Validators.compose([Validators.required, Validators.minLength(10)])
+      ),
+    });
+  }
+
+  get getTaskFormControl(): {
+    title: FormControl<string>;
+    description: FormControl<string>;
+  } {
+    return this.taskForm.controls;
+  }
+
+  get getTaskFormIsValid(): boolean {
+    return this.taskForm.valid;
+  }
+
+  get getTitleIsNotValid(): boolean {
+    return (
+      this.getTaskFormControl['title'].touched &&
+      !this.getTaskFormControl['title'].valid
+    );
+  }
+
+  get getDescriptionIsNotValid(): boolean {
+    return (
+      this.getTaskFormControl['description'].touched &&
+      !this.getTaskFormControl['description'].valid
+    );
+  }
+
+  onAddTask() {
+    if (this.taskForm.valid) {
+      console.log(this.taskForm.value);
+    }
+  }
+
+  showTitleErrors(): string | void {
+    const titleForm = this.getTaskFormControl['title'];
+    if (this.getTitleIsNotValid) {
+      if (titleForm.getError('required')) {
+        return 'Title is required';
+      }
+      if (titleForm.getError('minlength')) {
+        return 'Title should be minimum 5 characters';
+      }
+    }
+  }
+  showDescriptionErrors(): string | void {
+    const descriptionForm = this.getTaskFormControl['description'];
+    if (this.getDescriptionIsNotValid) {
+      if (descriptionForm.getError('required')) {
+        return 'Description is required';
+      }
+      if (descriptionForm.getError('minlength')) {
+        return 'Description should be minimum 10 characters';
+      }
+    }
+  }
+}
