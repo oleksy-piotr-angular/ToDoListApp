@@ -10,7 +10,7 @@
       <mat-card-content>
         <mat-list *ngIf="tasks$ | async as tasks">
           <mat-list-item *ngFor="let task of tasks">
-            <span matListItemTitle>{{ task.title }}</span>
+            <span matListItemTitle>{{ task.id }}: {{ task.title }}</span>
             <span matListItemLine>{{ task.description }}</span>
           </mat-list-item>
         </mat-list>

@@ -5,6 +5,10 @@ import {
   FormGroup,
   Validators,
 } from '@angular/forms';
+import { Store } from '@ngrx/store';
+import { Task } from 'src/app/models/task.model';
+import { AppState } from 'src/app/store/app.state';
+import { addTask } from '../state/tasks.actions';
 
 @Component({
   selector: 'app-task-form',
@@ -16,7 +20,7 @@ export class TaskFormComponent {
     title: FormControl<string>;
     description: FormControl<string>;
   }>;
-  constructor(private fb: FormBuilder) {
+  constructor(private fb: FormBuilder, private store: Store<AppState>) {
     this.taskForm = this.fb.group({
       title: this.fb.nonNullable.control(
         '',
@@ -54,12 +58,6 @@ export class TaskFormComponent {
     );
   }
 
-  onAddTask() {
-    if (this.taskForm.valid) {
-      console.log(this.taskForm.value);
-    }
-  }
-
   showTitleErrors(): string | void {
     const titleForm = this.getTaskFormControl['title'];
     if (this.getTitleIsNotValid) {
@@ -80,6 +78,21 @@ export class TaskFormComponent {
       if (descriptionForm.getError('minlength')) {
         return 'Description should be minimum 10 characters';
       }
+    }
+  }
+
+  onAddTask() {
+    if (this.taskForm.valid) {
+      console.log(this.taskForm.value);
+      const task: Task = {
+        title: this.taskForm.value.title ? this.taskForm.value.title : '',
+        description: this.taskForm.value.description
+          ? this.taskForm.value.description
+          : '',
+        isDone: false,
+      };
+
+      this.store.dispatch(addTask({ task }));
     }
   }
 }

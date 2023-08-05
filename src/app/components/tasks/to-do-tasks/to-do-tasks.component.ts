@@ -3,7 +3,7 @@ import { Task } from 'src/app/models/task.model';
 import { TasksState } from '../state/tasks.state';
 import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
-import { getTasks } from '../state/tasks.selector';
+import { getTasksToDo } from '../state/tasks.selector';
 import { AppState } from 'src/app/store/app.state';
 
 @Component({
@@ -16,6 +16,6 @@ export class ToDoTasksComponent implements OnInit {
   constructor(private store: Store<AppState>) {}
 
   ngOnInit(): void {
-    this.tasks$ = this.store.select(getTasks);
+    this.tasks$ = this.store.select(getTasksToDo);
   }
 }
