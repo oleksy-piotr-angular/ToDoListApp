@@ -4,10 +4,13 @@ import { addTask } from './tasks.actions';
 
 const _tasksReducer = createReducer(
   initialState,
-  on(addTask, (state) => {
+  on(addTask, (state, action) => {
+    let task = { ...action.task };
+
+    task.id = (state.tasks.length + 1).toString();
     return {
       ...state,
-      newState: state,
+      tasks: [...state.tasks, task],
     };
   })
 );

@@ -3,6 +3,6 @@ import { createFeatureSelector, createSelector } from '@ngrx/store';
 
 const getTasksState = createFeatureSelector<TasksState>('tasks');
 
-export const getTasks = createSelector(getTasksState, (state) => {
-  return state.tasks;
+export const getTasksToDo = createSelector(getTasksState, (state) => {
+  return state.tasks.filter((task) => task.isDone === false);
 });
