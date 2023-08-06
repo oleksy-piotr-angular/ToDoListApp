@@ -2,7 +2,9 @@ import { Task } from 'src/app/models/task.model';
 import { TasksState } from './tasks.state';
 import { createFeatureSelector, createSelector, props } from '@ngrx/store';
 
-const getTasksState = createFeatureSelector<TasksState>('tasks');
+export const TASKS_STATE_NAME = 'tasks';
+
+const getTasksState = createFeatureSelector<TasksState>(TASKS_STATE_NAME);
 
 export const getTasksToDo = createSelector(getTasksState, (state) => {
   return state.tasks.filter((task) => task.isDone === false);
