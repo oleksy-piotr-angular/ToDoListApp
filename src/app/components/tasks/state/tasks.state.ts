@@ -14,7 +14,7 @@ export const initialState: TasksState = {
     },
     {
       id: 2,
-      title: 'Task Title2 Was Done',
+      title: 'Task Title2 Not Done',
       description: 'Task description2',
       isDone: false,
     },

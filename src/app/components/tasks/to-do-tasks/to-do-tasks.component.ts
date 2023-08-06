@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import { Task } from 'src/app/models/task.model';
-import { TasksState } from '../state/tasks.state';
 import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
 import { getTasksToDo } from '../state/tasks.selector';
