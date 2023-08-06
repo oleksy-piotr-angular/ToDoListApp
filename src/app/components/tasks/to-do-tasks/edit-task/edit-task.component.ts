@@ -9,16 +9,16 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { Store } from '@ngrx/store';
 import { Task } from 'src/app/models/task.model';
 import { AppState } from 'src/app/store/app.state';
-import { getTaskById } from '../state/tasks.selector';
+import { getTaskById } from '../../state/tasks.selector';
 import { Subscription } from 'rxjs';
-import { updateTask } from '../state/tasks.actions';
+import { updateTask } from '../../state/tasks.actions';
 
 @Component({
   selector: 'app-edit-task',
   templateUrl: './edit-task.component.html',
   styleUrls: ['./edit-task.component.css'],
 })
-export class EditTaskComponent implements OnDestroy {
+export class EditTaskComponent implements OnDestroy, OnInit {
   task: Task | undefined = undefined;
 
   taskForm!: FormGroup<{
@@ -33,7 +33,8 @@ export class EditTaskComponent implements OnDestroy {
     private fb: FormBuilder,
     private store: Store<AppState>,
     private router: Router
-  ) {
+  ) {}
+  ngOnInit(): void {
     this.route.paramMap.subscribe((params) => {
       const id = params.get('id')!;
       this.taskSubscription = this.store

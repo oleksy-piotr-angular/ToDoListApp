@@ -8,15 +8,15 @@ import {
 import { Store } from '@ngrx/store';
 import { Task } from 'src/app/models/task.model';
 import { AppState } from 'src/app/store/app.state';
-import { addTask } from '../state/tasks.actions';
 import { Router } from '@angular/router';
+import { addTask } from '../../state/tasks.actions';
 
 @Component({
-  selector: 'app-task-form',
-  templateUrl: './task-form.component.html',
-  styleUrls: ['./task-form.component.css'],
+  selector: 'app-add-task',
+  templateUrl: './add-task.component.html',
+  styleUrls: ['./add-task.component.css'],
 })
-export class TaskFormComponent {
+export class AddTaskComponent {
   taskForm: FormGroup<{
     title: FormControl<string>;
     description: FormControl<string>;
