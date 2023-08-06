@@ -7,3 +7,7 @@
 .blue-icon {
   color: blue;
 }
+.justify-end {
+  display: flex;
+  justify-content: end;
+}

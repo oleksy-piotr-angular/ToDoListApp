@@ -11,6 +11,8 @@ import { AppMaterialModule } from 'src/app/AngularMaterial/material-module';
 import { StoreModule } from '@ngrx/store';
 import { tasksReducer } from '../state/tasks.reducer';
 import { TASKS_STATE_NAME } from '../state/tasks.selector';
+import { EffectsModule } from '@ngrx/effects';
+import { TasksEffects } from '../state/tasks.effects';
 
 @NgModule({
   declarations: [EditTaskComponent, AddTaskComponent, ToDoTasksComponent],
@@ -19,6 +21,7 @@ import { TASKS_STATE_NAME } from '../state/tasks.selector';
     CommonModule,
     ToDoTasksRoutingModule,
     ReactiveFormsModule,
+    EffectsModule.forFeature([TasksEffects]),
     StoreModule.forFeature(TASKS_STATE_NAME, tasksReducer),
   ],
 })
