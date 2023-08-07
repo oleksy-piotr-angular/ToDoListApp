@@ -13,20 +13,29 @@ import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { HomeComponent } from './components/home/home.component';
 import { EffectsModule } from '@ngrx/effects';
+import { HttpClientModule } from '@angular/common/http';
+import { LoadingSpinnerComponent } from './shared/components/loading-spinner/loading-spinner.component';
+import { appReducer } from './store/app.state';
 
 @NgModule({
-  declarations: [AppComponent, HeaderComponent, HomeComponent],
+  declarations: [
+    AppComponent,
+    HeaderComponent,
+    HomeComponent,
+    LoadingSpinnerComponent,
+  ],
   imports: [
     BrowserModule,
     BrowserAnimationsModule,
     AppRoutingModule,
     AppMaterialModule,
+    HttpClientModule,
     ToastrModule.forRoot({
       tapToDismiss: true,
       disableTimeOut: true,
     }),
-    EffectsModule.forFeature([]),
-    StoreModule.forRoot({}),
+    StoreModule.forRoot(appReducer),
+    EffectsModule.forRoot([]),
     StoreDevtoolsModule.instrument({
       maxAge: 25,
       logOnly: false,
@@ -37,9 +46,7 @@ import { EffectsModule } from '@ngrx/effects';
       },
     }),
     NgbModule,
-    StoreModule.forRoot({}, {}),
     StoreDevtoolsModule.instrument({ maxAge: 25, logOnly: !isDevMode() }),
-    EffectsModule.forRoot([]),
   ],
   providers: [],
   bootstrap: [AppComponent],
