@@ -6,4 +6,13 @@ import { Injectable } from '@angular/core';
 })
 export class TasksService {
   constructor(private http: HttpClient) {}
+
+  getErrorMessage(message: string) {
+    switch (message) {
+      case 'ERROR_TEST':
+        return 'Error test..';
+      default:
+        return 'unknown error.';
+    }
+  }
 }
