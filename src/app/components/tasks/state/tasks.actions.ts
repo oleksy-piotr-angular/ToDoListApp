@@ -1,5 +1,5 @@
 import { createAction, props } from '@ngrx/store';
-import { Task } from 'src/app/models/task.model';
+import { Task } from './../../../models/task.model';
 
 export const ADD_TASK_ACTION = '[todo task page] add task';
 export const UPDATE_TASK_ACTION = '[todo task page] update task';

@@ -6,7 +6,7 @@ import {
   Validators,
 } from '@angular/forms';
 import { Store } from '@ngrx/store';
-import { Task } from 'src/app/models/task.model';
+import { Task } from './../../../../models/task.model';
 import { AppState } from 'src/app/store/app.state';
 import { Router } from '@angular/router';
 import { addTask } from '../../state/tasks.actions';

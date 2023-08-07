@@ -1,4 +1,4 @@
-import { Task } from 'src/app/models/task.model';
+import { Task } from './../../../models/task.model';
 import { TasksState } from './tasks.state';
 import { createFeatureSelector, createSelector, props } from '@ngrx/store';
 
