@@ -1,10 +1,11 @@
-import { tasksReducer } from '../components/tasks/state/tasks.reducer';
-import { TasksState } from '../components/tasks/state/tasks.state';
+import { sharedReducer } from '../shared/shared.reducer';
+import { SHARED_STATE_NAME } from '../shared/shared.selector';
+import { SharedState } from '../shared/shared.state';
 
 export interface AppState {
-  tasks: TasksState;
+  [SHARED_STATE_NAME]: SharedState;
 }
 
 export const appReducer = {
-  tasks: tasksReducer,
+  [SHARED_STATE_NAME]: sharedReducer,
 };
