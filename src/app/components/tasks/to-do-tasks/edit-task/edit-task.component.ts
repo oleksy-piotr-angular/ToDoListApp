@@ -7,7 +7,7 @@ import {
 } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Store } from '@ngrx/store';
-import { Task } from 'src/app/models/task.model';
+import { Task } from './../../../../models/task.model';
 import { AppState } from 'src/app/store/app.state';
 import { getTaskById } from '../../state/tasks.selector';
 import { Subscription } from 'rxjs';
