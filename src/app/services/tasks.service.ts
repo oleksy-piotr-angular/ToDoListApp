@@ -32,6 +32,28 @@ export class TasksService {
     );
   }
 
+  updateTask(task: Task) {
+    const taskData = {
+      [task.id!]: {
+        title: task.title,
+        description: task.description,
+        startDate: task.startDate,
+        doneDate: task.doneDate,
+        isDone: task.isDone,
+      },
+    };
+    return this.http.patch(
+      `https://todolistapp-797f3-default-rtdb.europe-west1.firebasedatabase.app/tasks.json`,
+      taskData
+    );
+  }
+
+  deleteTask(id: string) {
+    return this.http.delete(
+      `https://todolistapp-797f3-default-rtdb.europe-west1.firebasedatabase.app/tasks/${id}.json`
+    );
+  }
+
   getErrorMessage(message: string) {
     switch (message) {
       case 'ERROR_TEST':

@@ -7,11 +7,15 @@ import { AppState } from 'src/app/store/app.state';
 import {
   addTask,
   addTaskSuccess,
+  deleteTask,
+  deleteTaskSuccess,
   loadTasks,
   loadTasksSuccess,
+  updateTask,
+  updateTaskSuccess,
 } from './tasks.actions';
 import { Task } from 'src/app/models/task.model';
-import { map, mergeMap } from 'rxjs/operators';
+import { map, mergeMap, switchMap } from 'rxjs/operators';
 
 @Injectable()
 export class TasksEffects {
@@ -43,6 +47,32 @@ export class TasksEffects {
           map((data) => {
             const task = { ...action.task, id: data.name };
             return addTaskSuccess({ task });
+          })
+        );
+      })
+    );
+  });
+
+  updateTask$ = createEffect(() => {
+    return this.actions$.pipe(
+      ofType(updateTask),
+      switchMap((action) => {
+        return this.tasksService.updateTask(action.task).pipe(
+          map((data) => {
+            return updateTaskSuccess({ task: action.task });
+          })
+        );
+      })
+    );
+  });
+
+  deleteTask$ = createEffect(() => {
+    return this.actions$.pipe(
+      ofType(deleteTask),
+      switchMap((action) => {
+        return this.tasksService.deleteTask(action.id).pipe(
+          map((data) => {
+            return deleteTaskSuccess({ id: action.id });
           })
         );
       })

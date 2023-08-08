@@ -4,7 +4,9 @@ import { Task } from './../../../models/task.model';
 export const ADD_TASK_ACTION = '[todo tasks page] add task';
 export const ADD_TASK_SUCCESS = '[todo tasks page] add task success';
 export const UPDATE_TASK_ACTION = '[todo tasks page] update task';
+export const UPDATE_TASK_SUCCESS = '[todo tasks page] update task success';
 export const DELETE_TASK_ACTION = '[todo tasks page] delete task';
+export const DELETE_TASK_SUCCESS = '[todo tasks page] delete task success';
 export const LOAD_TASKS = '[todo tasks page] load tasks';
 export const LOAD_TASKS_SUCCESS = '[todo tasks page] load tasks success ';
 
@@ -17,8 +19,19 @@ export const updateTask = createAction(
   UPDATE_TASK_ACTION,
   props<{ task: Task }>()
 );
+
+export const updateTaskSuccess = createAction(
+  UPDATE_TASK_SUCCESS,
+  props<{ task: Task }>()
+);
+
 export const deleteTask = createAction(
   DELETE_TASK_ACTION,
+  props<{ id: string }>()
+);
+
+export const deleteTaskSuccess = createAction(
+  DELETE_TASK_SUCCESS,
   props<{ id: string }>()
 );
 

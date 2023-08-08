@@ -2,9 +2,9 @@ import { createReducer, on } from '@ngrx/store';
 import { initialState } from './tasks.state';
 import {
   addTaskSuccess,
-  deleteTask,
+  deleteTaskSuccess,
   loadTasksSuccess,
-  updateTask,
+  updateTaskSuccess,
 } from './tasks.actions';
 
 const _tasksReducer = createReducer(
@@ -17,7 +17,7 @@ const _tasksReducer = createReducer(
       tasks: [...state.tasks, task],
     };
   }),
-  on(updateTask, (state, action) => {
+  on(updateTaskSuccess, (state, action) => {
     const updatedTask = state.tasks.map((task) => {
       return task.id === action.task.id ? action.task : task;
     });
@@ -26,7 +26,7 @@ const _tasksReducer = createReducer(
       tasks: updatedTask,
     };
   }),
-  on(deleteTask, (state, { id }) => {
+  on(deleteTaskSuccess, (state, { id }) => {
     const updatedTask = state.tasks.filter((task) => {
       return task.id !== id;
     });
