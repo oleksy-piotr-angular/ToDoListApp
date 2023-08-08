@@ -12,6 +12,7 @@ import { AppState } from 'src/app/store/app.state';
 import { getTaskById } from '../../state/tasks.selector';
 import { Subscription } from 'rxjs';
 import { updateTask } from '../../state/tasks.actions';
+import { setLoadingSpinner } from 'src/app/shared/shared.action';
 
 @Component({
   selector: 'app-edit-task',
@@ -111,6 +112,7 @@ export class EditTaskComponent implements OnDestroy, OnInit {
 
   onEditTask() {
     if (this.taskForm.valid) {
+      this.store.dispatch(setLoadingSpinner({ status: true }));
       const title = this.taskForm.value.title;
       const description = this.taskForm.value.description;
 

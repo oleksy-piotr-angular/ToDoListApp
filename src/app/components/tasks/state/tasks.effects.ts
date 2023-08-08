@@ -17,6 +17,7 @@ import {
 import { Task } from 'src/app/models/task.model';
 import { map, mergeMap, switchMap } from 'rxjs/operators';
 import { Router } from '@angular/router';
+import { setLoadingSpinner } from 'src/app/shared/shared.action';
 
 @Injectable()
 export class TasksEffects {
@@ -33,6 +34,7 @@ export class TasksEffects {
       mergeMap((action) => {
         return this.tasksService.getTasks().pipe(
           map((tasks) => {
+            this.store.dispatch(setLoadingSpinner({ status: false }));
             return loadTasksSuccess({ tasks });
           })
         );
@@ -46,6 +48,7 @@ export class TasksEffects {
       mergeMap((action: { task: Task }) => {
         return this.tasksService.addTask(action.task).pipe(
           map((data) => {
+            this.store.dispatch(setLoadingSpinner({ status: false }));
             const task = { ...action.task, id: data.name };
             this.router.navigate(['todo-tasks']);
             return addTaskSuccess({ task });
@@ -61,6 +64,7 @@ export class TasksEffects {
       switchMap((action) => {
         return this.tasksService.updateTask(action.task).pipe(
           map((data) => {
+            this.store.dispatch(setLoadingSpinner({ status: false }));
             this.router.navigate(['todo-tasks']);
             return updateTaskSuccess({ task: action.task });
           })
@@ -75,6 +79,7 @@ export class TasksEffects {
       switchMap((action) => {
         return this.tasksService.deleteTask(action.id).pipe(
           map((data) => {
+            this.store.dispatch(setLoadingSpinner({ status: false }));
             return deleteTaskSuccess({ id: action.id });
           })
         );

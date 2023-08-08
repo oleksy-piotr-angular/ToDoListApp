@@ -10,6 +10,7 @@ import { Task } from './../../../../models/task.model';
 import { AppState } from 'src/app/store/app.state';
 import { Router } from '@angular/router';
 import { addTask } from '../../state/tasks.actions';
+import { setLoadingSpinner } from 'src/app/shared/shared.action';
 
 @Component({
   selector: 'app-add-task',
@@ -84,6 +85,7 @@ export class AddTaskComponent {
 
   onAddTask() {
     if (this.taskForm.valid) {
+      this.store.dispatch(setLoadingSpinner({ status: true }));
       const task: Task = {
         title: this.taskForm.value.title,
         description: this.taskForm.value.description,
