@@ -54,6 +54,12 @@ export class TasksService {
     );
   }
 
+  getTaskById(id: string): Observable<Task> {
+    return this.http.get(
+      `https://todolistapp-797f3-default-rtdb.europe-west1.firebasedatabase.app/tasks/${id}.json`
+    );
+  }
+
   getErrorMessage(message: string) {
     switch (message) {
       case 'ERROR_TEST':

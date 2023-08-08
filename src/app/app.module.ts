@@ -18,6 +18,7 @@ import { LoadingSpinnerComponent } from './shared/components/loading-spinner/loa
 import { appReducer } from './store/app.state';
 import { StoreRouterConnectingModule } from '@ngrx/router-store';
 import { CustomSerializer } from './store/router/custom-serializer';
+import { SingleTaskComponent } from './components/tasks/single-task/single-task.component';
 
 @NgModule({
   declarations: [
@@ -25,6 +26,7 @@ import { CustomSerializer } from './store/router/custom-serializer';
     HeaderComponent,
     HomeComponent,
     LoadingSpinnerComponent,
+    SingleTaskComponent,
   ],
   imports: [
     BrowserModule,

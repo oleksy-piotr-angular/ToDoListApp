@@ -1,0 +1,7 @@
+<div>Task Details:</div>
+<div *ngIf="task | async as taskData">
+  <div>Id: {{ taskData.id }}</div>
+  <div>Title: {{ taskData.title }}</div>
+  <div>Description: {{ taskData.description }}</div>
+</div>
+<div><a [routerLink]="['/todo-tasks']">Back to TODO Tasks List</a></div>
