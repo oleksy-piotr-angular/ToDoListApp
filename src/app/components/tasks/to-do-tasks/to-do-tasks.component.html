@@ -13,7 +13,10 @@
     <mat-card>
       <mat-card-content>
         <mat-selection-list *ngIf="tasks$ | async as tasks">
-          <mat-list-item *ngFor="let task of tasks">
+          <mat-list-item
+            *ngFor="let task of tasks"
+            [routerLink]="['details', task.id]"
+          >
             <span matListItemTitle>{{ task.title }}</span>
             <span matListItemLine>{{ task.description }}</span>
             <button mat-icon-button [routerLink]="['edit', task.id]">

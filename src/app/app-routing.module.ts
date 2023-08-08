@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { HomeComponent } from './components/home/home.component';
+import { SingleTaskComponent } from './components/tasks/single-task/single-task.component';
 
 const routes: Routes = [
   { path: '', component: HomeComponent },
@@ -17,6 +18,10 @@ const routes: Routes = [
       import('./components/tasks/to-do-tasks/to-do-tasks.module').then(
         (m) => m.ToDoTasksModule
       ),
+  },
+  {
+    path: 'todo-tasks/details/:id',
+    component: SingleTaskComponent,
   },
 ];
 

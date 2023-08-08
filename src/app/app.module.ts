@@ -16,6 +16,9 @@ import { EffectsModule } from '@ngrx/effects';
 import { HttpClientModule } from '@angular/common/http';
 import { LoadingSpinnerComponent } from './shared/components/loading-spinner/loading-spinner.component';
 import { appReducer } from './store/app.state';
+import { StoreRouterConnectingModule } from '@ngrx/router-store';
+import { CustomSerializer } from './store/router/custom-serializer';
+import { SingleTaskComponent } from './components/tasks/single-task/single-task.component';
 
 @NgModule({
   declarations: [
@@ -23,6 +26,7 @@ import { appReducer } from './store/app.state';
     HeaderComponent,
     HomeComponent,
     LoadingSpinnerComponent,
+    SingleTaskComponent,
   ],
   imports: [
     BrowserModule,
@@ -36,6 +40,7 @@ import { appReducer } from './store/app.state';
     }),
     StoreModule.forRoot(appReducer),
     EffectsModule.forRoot([]),
+    StoreRouterConnectingModule.forRoot(),
     StoreDevtoolsModule.instrument({
       maxAge: 25,
       logOnly: false,
@@ -47,6 +52,9 @@ import { appReducer } from './store/app.state';
     }),
     NgbModule,
     StoreDevtoolsModule.instrument({ maxAge: 25, logOnly: !isDevMode() }),
+    StoreRouterConnectingModule.forRoot({
+      serializer: CustomSerializer,
+    }),
   ],
   providers: [],
   bootstrap: [AppComponent],

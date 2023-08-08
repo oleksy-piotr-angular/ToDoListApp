@@ -15,7 +15,26 @@ import {
   updateTaskSuccess,
 } from './tasks.actions';
 import { Task } from 'src/app/models/task.model';
-import { map, mergeMap, switchMap } from 'rxjs/operators';
+import {
+  filter,
+  map,
+  mergeMap,
+  switchMap,
+  withLatestFrom,
+} from 'rxjs/operators';
+import { Router } from '@angular/router';
+import { setLoadingSpinner } from 'src/app/shared/shared.action';
+import {
+  RouterNavigatedAction,
+  ROUTER_NAVIGATION,
+  MinimalActivatedRouteSnapshot,
+  routerNavigatedAction,
+} from '@ngrx/router-store';
+import {
+  CustomSerializer,
+  RouterStateUrl,
+} from './../../../store/router/custom-serializer';
+import { getRouterState } from 'src/app/store/router/router.selector';
 
 @Injectable()
 export class TasksEffects {
@@ -23,7 +42,7 @@ export class TasksEffects {
     private actions$: Actions,
     private store: Store<AppState>,
     private tasksService: TasksService,
-    private notification: NotificationService
+    private router: Router
   ) {}
 
   loadTasks = createEffect(() => {
@@ -32,6 +51,7 @@ export class TasksEffects {
       mergeMap((action) => {
         return this.tasksService.getTasks().pipe(
           map((tasks) => {
+            this.store.dispatch(setLoadingSpinner({ status: false }));
             return loadTasksSuccess({ tasks });
           })
         );
@@ -45,7 +65,9 @@ export class TasksEffects {
       mergeMap((action: { task: Task }) => {
         return this.tasksService.addTask(action.task).pipe(
           map((data) => {
+            this.store.dispatch(setLoadingSpinner({ status: false }));
             const task = { ...action.task, id: data.name };
+            this.router.navigate(['todo-tasks']);
             return addTaskSuccess({ task });
           })
         );
@@ -59,6 +81,8 @@ export class TasksEffects {
       switchMap((action) => {
         return this.tasksService.updateTask(action.task).pipe(
           map((data) => {
+            this.store.dispatch(setLoadingSpinner({ status: false }));
+            this.router.navigate(['todo-tasks']);
             return updateTaskSuccess({ task: action.task });
           })
         );
@@ -72,7 +96,28 @@ export class TasksEffects {
       switchMap((action) => {
         return this.tasksService.deleteTask(action.id).pipe(
           map((data) => {
+            this.store.dispatch(setLoadingSpinner({ status: false }));
             return deleteTaskSuccess({ id: action.id });
+          })
+        );
+      })
+    );
+  });
+
+  getSingleTask$ = createEffect(() => {
+    return this.actions$.pipe(
+      ofType(ROUTER_NAVIGATION),
+      filter((r: RouterNavigatedAction) => {
+        return r.payload.routerState.url.startsWith('/todo-tasks/details');
+      }),
+      withLatestFrom(this.store.select(getRouterState), (action, router) => {
+        return router.state.params['id'];
+      }),
+      switchMap((id) => {
+        return this.tasksService.getTaskById(id).pipe(
+          map((task) => {
+            const taskData = [{ ...task, id }];
+            return loadTasksSuccess({ tasks: taskData });
           })
         );
       })
