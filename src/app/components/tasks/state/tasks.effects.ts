@@ -16,6 +16,7 @@ import {
 } from './tasks.actions';
 import { Task } from 'src/app/models/task.model';
 import { map, mergeMap, switchMap } from 'rxjs/operators';
+import { Router } from '@angular/router';
 
 @Injectable()
 export class TasksEffects {
@@ -23,7 +24,7 @@ export class TasksEffects {
     private actions$: Actions,
     private store: Store<AppState>,
     private tasksService: TasksService,
-    private notification: NotificationService
+    private router: Router
   ) {}
 
   loadTasks = createEffect(() => {
@@ -46,6 +47,7 @@ export class TasksEffects {
         return this.tasksService.addTask(action.task).pipe(
           map((data) => {
             const task = { ...action.task, id: data.name };
+            this.router.navigate(['todo-tasks']);
             return addTaskSuccess({ task });
           })
         );
@@ -59,6 +61,7 @@ export class TasksEffects {
       switchMap((action) => {
         return this.tasksService.updateTask(action.task).pipe(
           map((data) => {
+            this.router.navigate(['todo-tasks']);
             return updateTaskSuccess({ task: action.task });
           })
         );

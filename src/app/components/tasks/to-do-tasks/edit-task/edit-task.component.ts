@@ -28,33 +28,28 @@ export class EditTaskComponent implements OnDestroy, OnInit {
 
   taskSubscription: Subscription = new Subscription();
 
-  constructor(
-    private route: ActivatedRoute,
-    private fb: FormBuilder,
-    private store: Store<AppState>,
-    private router: Router
-  ) {}
+  constructor(private fb: FormBuilder, private store: Store<AppState>) {}
   ngOnInit(): void {
-    this.route.paramMap.subscribe((params) => {
-      const id = params.get('id')!;
-      this.taskSubscription = this.store
-        .select(getTaskById, { id })
-        .subscribe((data) => {
-          this.task = data;
-
-          this.createForm();
+    this.createForm();
+    this.taskSubscription = this.store.select(getTaskById).subscribe((task) => {
+      if (task) {
+        this.task = task;
+        this.taskForm.patchValue({
+          title: task?.title,
+          description: task?.description,
         });
+      }
     });
   }
 
   createForm() {
     this.taskForm = this.fb.group({
       title: this.fb.nonNullable.control<string | undefined>(
-        this.task!.title,
+        undefined,
         Validators.compose([Validators.required, Validators.minLength(5)])
       ),
-      description: this.fb.nonNullable.control(
-        this.task!.description,
+      description: this.fb.nonNullable.control<string | undefined>(
+        undefined,
         Validators.compose([Validators.required, Validators.minLength(10)])
       ),
     });
@@ -127,7 +122,6 @@ export class EditTaskComponent implements OnDestroy, OnInit {
       };
 
       this.store.dispatch(updateTask({ task }));
-      this.router.navigate(['todo-tasks']);
     }
   }
 }

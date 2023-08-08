@@ -18,29 +18,25 @@ import { addTask } from '../../state/tasks.actions';
 })
 export class AddTaskComponent {
   taskForm: FormGroup<{
-    title: FormControl<string>;
-    description: FormControl<string>;
+    title: FormControl<string | undefined>;
+    description: FormControl<string | undefined>;
   }>;
-  constructor(
-    private fb: FormBuilder,
-    private store: Store<AppState>,
-    private router: Router
-  ) {
+  constructor(private fb: FormBuilder, private store: Store<AppState>) {
     this.taskForm = this.fb.group({
-      title: this.fb.nonNullable.control(
-        '',
+      title: this.fb.nonNullable.control<string | undefined>(
+        undefined,
         Validators.compose([Validators.required, Validators.minLength(5)])
       ),
-      description: this.fb.nonNullable.control(
-        '',
+      description: this.fb.nonNullable.control<string | undefined>(
+        undefined,
         Validators.compose([Validators.required, Validators.minLength(10)])
       ),
     });
   }
 
   get getTaskFormControl(): {
-    title: FormControl<string>;
-    description: FormControl<string>;
+    title: FormControl<string | undefined>;
+    description: FormControl<string | undefined>;
   } {
     return this.taskForm.controls;
   }
@@ -95,7 +91,6 @@ export class AddTaskComponent {
       };
 
       this.store.dispatch(addTask({ task }));
-      this.router.navigate(['todo-tasks']);
     }
   }
 }
