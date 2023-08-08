@@ -89,10 +89,8 @@ export class AddTaskComponent {
   onAddTask() {
     if (this.taskForm.valid) {
       const task: Task = {
-        title: this.taskForm.value.title ? this.taskForm.value.title : '',
-        description: this.taskForm.value.description
-          ? this.taskForm.value.description
-          : '',
+        title: this.taskForm.value.title,
+        description: this.taskForm.value.description,
         isDone: false,
       };
 

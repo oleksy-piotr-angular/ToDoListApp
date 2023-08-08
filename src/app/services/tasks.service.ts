@@ -25,8 +25,8 @@ export class TasksService {
       );
   }
 
-  addTask(task: Task) {
-    return this.http.post(
+  addTask(task: Task): Observable<{ name: string }> {
+    return this.http.post<{ name: string }>(
       `https://todolistapp-797f3-default-rtdb.europe-west1.firebasedatabase.app/tasks.json`,
       task
     );

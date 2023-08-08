@@ -4,7 +4,12 @@ import { Store } from '@ngrx/store';
 import { NotificationService } from 'src/app/services/notification.service';
 import { TasksService } from 'src/app/services/tasks.service';
 import { AppState } from 'src/app/store/app.state';
-import { addTask, loadTasks, loadTasksSuccess } from './tasks.actions';
+import {
+  addTask,
+  addTaskSuccess,
+  loadTasks,
+  loadTasksSuccess,
+} from './tasks.actions';
 import { Task } from 'src/app/models/task.model';
 import { map, mergeMap } from 'rxjs/operators';
 
@@ -30,19 +35,17 @@ export class TasksEffects {
     );
   });
 
-  addTask$ = createEffect(
-    () => {
-      return this.actions$.pipe(
-        ofType(addTask),
-        mergeMap((action: { task: Task }) => {
-          return this.tasksService.addTask(action.task).pipe(
-            map((data) => {
-              console.log(data);
-            })
-          );
-        })
-      );
-    },
-    { dispatch: false }
-  );
+  addTask$ = createEffect(() => {
+    return this.actions$.pipe(
+      ofType(addTask),
+      mergeMap((action: { task: Task }) => {
+        return this.tasksService.addTask(action.task).pipe(
+          map((data) => {
+            const task = { ...action.task, id: data.name };
+            return addTaskSuccess({ task });
+          })
+        );
+      })
+    );
+  });
 }
