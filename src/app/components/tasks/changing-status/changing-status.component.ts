@@ -6,6 +6,7 @@ import { changeTaskStatus } from '../state/tasks.actions';
 import { Task } from 'src/app/models/task.model';
 import { Subscription } from 'rxjs';
 import { getTaskById } from '../state/tasks.selector';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-changing-status',
@@ -17,7 +18,7 @@ export class ChangingStatusComponent implements OnDestroy {
 
   taskSubscription: Subscription = new Subscription();
 
-  constructor(private store: Store<TasksState>) {
+  constructor(private store: Store<TasksState>, private router: Router) {
     this.taskSubscription = this.store.select(getTaskById).subscribe((task) => {
       if (task) {
         this.task = task;
@@ -36,7 +37,7 @@ export class ChangingStatusComponent implements OnDestroy {
     };
     this.store.dispatch(setLoadingSpinner({ status: true }));
     this.store.dispatch(changeTaskStatus({ task }));
-    console.log(this.task);
+    this.router.navigate(['todo-tasks']);
   }
 
   onRestoreCompleted() {
@@ -50,7 +51,7 @@ export class ChangingStatusComponent implements OnDestroy {
     };
     this.store.dispatch(setLoadingSpinner({ status: true }));
     this.store.dispatch(changeTaskStatus({ task }));
-    console.log(this.task);
+    this.router.navigate(['done-tasks']);
   }
 
   ngOnDestroy(): void {

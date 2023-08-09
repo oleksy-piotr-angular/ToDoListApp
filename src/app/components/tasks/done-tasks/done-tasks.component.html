@@ -4,32 +4,29 @@
     <h2 class="my-3">Completed Tasks:</h2>
     <mat-card>
       <mat-card-content>
-        <mat-list *ngIf="tasks$ | async as tasks">
+        <mat-list *ngIf="tasks$ | async as tasks; else NO_TASK">
           <mat-list-item *ngFor="let task of tasks" class="my-5">
             <span matListItemTitle>
-              <span>Title:</span><br />
-              {{ task.title }}</span
-            >
+              <div class="my-2">
+                <b>Title:</b><br />
+                {{ task.title }}
+              </div>
+            </span>
 
-            <span matListItemLine
-              ><span><b>Description:</b></span
-              ><br />
-              {{ task.description }}</span
-            >
-            <p
-              matListItemLine
-              *ngIf="task.doneDate"
-              class="d-flex justify-content-end"
-            >
+            <span matListItemLine>
+              <div class="my-2">
+                <b> Description:</b><br />
+                {{ task.description }}
+              </div>
+            </span>
+
+            <p matListItemLine *ngIf="task.doneDate">
               <b>Completed:</b><br />
-              {{ task.doneDate }}
+              {{ task.doneDate | date }}
             </p>
-            <span
-              matListItemLine
-              *ngIf="task.startDate"
-              class="d-flex justify-content-end"
+            <span matListItemLine *ngIf="task.startDate"
               ><b>Created:</b><br />
-              {{ task.startDate }}</span
+              {{ task.startDate | date }}</span
             >
             <button mat-icon-button [routerLink]="['edit', task.id]">
               <mat-icon class="blue-icon">edit</mat-icon>
@@ -46,6 +43,11 @@
             <span matListItemLine><hr /></span>
           </mat-list-item>
         </mat-list>
+        <ng-template #NO_TASK>
+          <mat-list>
+            <p>There is no Completed Task...</p>
+          </mat-list>
+        </ng-template>
       </mat-card-content>
     </mat-card>
   </div>

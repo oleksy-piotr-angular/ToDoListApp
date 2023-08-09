@@ -29,7 +29,11 @@ export class EditTaskComponent implements OnDestroy, OnInit {
 
   taskSubscription: Subscription = new Subscription();
 
-  constructor(private fb: FormBuilder, private store: Store<AppState>) {}
+  constructor(
+    private fb: FormBuilder,
+    private store: Store<AppState>,
+    private router: Router
+  ) {}
   ngOnInit(): void {
     this.createForm();
     this.taskSubscription = this.store.select(getTaskById).subscribe((task) => {
@@ -47,7 +51,11 @@ export class EditTaskComponent implements OnDestroy, OnInit {
     this.taskForm = this.fb.group({
       title: this.fb.nonNullable.control<string | undefined>(
         undefined,
-        Validators.compose([Validators.required, Validators.minLength(5)])
+        Validators.compose([
+          Validators.required,
+          Validators.minLength(5),
+          Validators.maxLength(40),
+        ])
       ),
       description: this.fb.nonNullable.control<string | undefined>(
         undefined,
@@ -96,6 +104,9 @@ export class EditTaskComponent implements OnDestroy, OnInit {
       if (titleForm.getError('minlength')) {
         return 'Title should be minimum 5 characters';
       }
+      if (titleForm.getError('maxlength')) {
+        return 'Title should be minimum 40 characters';
+      }
     }
   }
   showDescriptionErrors(): string | void {
@@ -120,10 +131,12 @@ export class EditTaskComponent implements OnDestroy, OnInit {
         id: this.task!.id,
         title,
         description,
+        startDate: this.task!.startDate,
         isDone: this.task?.isDone,
       };
 
       this.store.dispatch(updateTask({ task }));
+      this.router.navigate(['todo-tasks']);
     }
   }
 }

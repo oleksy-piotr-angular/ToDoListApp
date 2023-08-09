@@ -29,7 +29,11 @@ export class EditTaskComponent implements OnDestroy, OnInit {
 
   taskSubscription: Subscription = new Subscription();
 
-  constructor(private fb: FormBuilder, private store: Store<AppState>) {}
+  constructor(
+    private fb: FormBuilder,
+    private store: Store<AppState>,
+    private router: Router
+  ) {}
   ngOnInit(): void {
     this.createForm();
     this.taskSubscription = this.store.select(getTaskById).subscribe((task) => {
@@ -126,6 +130,7 @@ export class EditTaskComponent implements OnDestroy, OnInit {
       };
 
       this.store.dispatch(updateTask({ task }));
+      this.router.navigate(['done-tasks']);
     }
   }
 }

@@ -1,8 +1,37 @@
-<div>Task Details:</div>
+<h2 class="my-4">Task Details:</h2>
 <div *ngIf="task | async as taskData">
-  <div>Id: {{ taskData.id }}</div>
-  <div>Title: {{ taskData.title }}</div>
-  <div>Description: {{ taskData.description }}</div>
-  <div *ngIf="taskData.startDate">Created: {{ taskData.startDate }}</div>
+  <mat-card>
+    <mat-card-content>
+      <div class="banner-content my-4">
+        <p>
+          Id: <b>{{ taskData.id }}</b>
+        </p>
+
+        <p class="display-1">{{ taskData.title }}</p>
+
+        <p>
+          <b>Description:</b><br />
+          {{ taskData.description }}
+        </p>
+        <p *ngIf="taskData.startDate">
+          <b>Created: </b> {{ taskData.startDate }}
+        </p>
+        <p *ngIf="taskData.doneDate">
+          <b>Completed: </b> {{ taskData.doneDate }}
+        </p>
+      </div>
+    </mat-card-content>
+  </mat-card>
+  <div class="my-3">
+    <ng-template *ngIf="taskData.isDone; else TODO_Back">
+      <a mat-raised-button [routerLink]="['/done-tasks']"
+        >Back to Completed Tasks List</a
+      >
+    </ng-template>
+    <ng-template #TODO_Back>
+      <a mat-raised-button [routerLink]="['/todo-tasks']"
+        >Back to TODO Tasks List</a
+      >
+    </ng-template>
+  </div>
 </div>
-<div><a [routerLink]="['/todo-tasks']">Back to TODO Tasks List</a></div>

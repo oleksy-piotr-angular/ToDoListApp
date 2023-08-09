@@ -69,7 +69,7 @@ export class TasksService {
         description: task.description,
         startDate: task.startDate,
         doneDate: task.doneDate,
-        isDone: !task.isDone,
+        isDone: task.isDone,
         endDate: task.isDone ? undefined : new Date(),
       },
     };

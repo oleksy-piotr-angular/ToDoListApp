@@ -76,7 +76,7 @@ export class TasksEffects {
         return this.tasksService.updateTask(action.task).pipe(
           map((data) => {
             this.store.dispatch(setLoadingSpinner({ status: false }));
-            this.router.navigate(['todo-tasks']);
+
             return updateTaskSuccess({ task: action.task });
           })
         );
@@ -105,7 +105,6 @@ export class TasksEffects {
         return this.tasksService.changeTaskStatus(action.task).pipe(
           map((data) => {
             this.store.dispatch(setLoadingSpinner({ status: false }));
-            this.router.navigate(['done-tasks']);
             return changeTaskStatusSuccess({ task: action.task });
           })
         );

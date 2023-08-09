@@ -28,7 +28,11 @@ export class AddTaskComponent {
     this.taskForm = this.fb.group({
       title: this.fb.nonNullable.control<string | undefined>(
         undefined,
-        Validators.compose([Validators.required, Validators.minLength(5)])
+        Validators.compose([
+          Validators.required,
+          Validators.minLength(5),
+          Validators.maxLength(40),
+        ])
       ),
       description: this.fb.nonNullable.control<string | undefined>(
         undefined,
@@ -70,6 +74,9 @@ export class AddTaskComponent {
       }
       if (titleForm.getError('minlength')) {
         return 'Title should be minimum 5 characters';
+      }
+      if (titleForm.getError('maxlength')) {
+        return 'Title should be minimum 40 characters';
       }
     }
   }

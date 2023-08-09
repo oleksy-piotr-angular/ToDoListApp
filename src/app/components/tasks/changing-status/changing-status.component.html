@@ -12,11 +12,14 @@
         >
           Yes!
         </button>
+        <button mat-raised-button class="red-button" routerLink="/todo-tasks">
+          No!
+        </button>
       </div>
     </div>
   </div>
   <ng-template #completeTask>
-    <p class="my-5 text-center">This task completed successfully?</p>
+    <p class="my-5 text-center">This task was completed successfully?</p>
     <div class="row">
       <div class="my-3 d-flex justify-content-center">
         <button
@@ -25,6 +28,9 @@
           (click)="onCompletedTask()"
         >
           Yes!
+        </button>
+        <button mat-raised-button class="red-button" routerLink="/todo-tasks">
+          No!
         </button>
       </div>
     </div>
