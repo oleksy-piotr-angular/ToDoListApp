@@ -7,3 +7,9 @@
 .blue-icon {
   color: blue;
 }
+hr {
+  display: block;
+  margin: 10px 0 10px 0;
+  border-top: 1px solid rgba(0, 0, 0, 0.4);
+  width: 100%;
+}

@@ -18,15 +18,21 @@ import { setLoadingSpinner } from 'src/app/shared/shared.action';
   styleUrls: ['./add-task.component.css'],
 })
 export class AddTaskComponent {
+  addDate: boolean;
   taskForm: FormGroup<{
     title: FormControl<string | undefined>;
     description: FormControl<string | undefined>;
   }>;
   constructor(private fb: FormBuilder, private store: Store<AppState>) {
+    this.addDate = true;
     this.taskForm = this.fb.group({
       title: this.fb.nonNullable.control<string | undefined>(
         undefined,
-        Validators.compose([Validators.required, Validators.minLength(5)])
+        Validators.compose([
+          Validators.required,
+          Validators.minLength(5),
+          Validators.maxLength(40),
+        ])
       ),
       description: this.fb.nonNullable.control<string | undefined>(
         undefined,
@@ -69,6 +75,9 @@ export class AddTaskComponent {
       if (titleForm.getError('minlength')) {
         return 'Title should be minimum 5 characters';
       }
+      if (titleForm.getError('maxlength')) {
+        return 'Title should be minimum 40 characters';
+      }
     }
   }
   showDescriptionErrors(): string | void {
@@ -90,8 +99,9 @@ export class AddTaskComponent {
         title: this.taskForm.value.title,
         description: this.taskForm.value.description,
         isDone: false,
+        startDate: this.addDate ? new Date() : undefined,
       };
-
+      console.log(this.addDate);
       this.store.dispatch(addTask({ task }));
     }
   }

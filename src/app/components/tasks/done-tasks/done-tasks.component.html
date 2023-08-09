@@ -1,1 +1,57 @@
-<p>done-tasks works!</p>
+<div class="row py-4"></div>
+<div class="row">
+  <div class="col-md-8">
+    <h2 class="my-3">Completed Tasks:</h2>
+    <mat-card>
+      <mat-card-content>
+        <mat-list *ngIf="tasks$ | async as tasks; else NO_TASK">
+          <mat-list-item *ngFor="let task of tasks" class="my-5">
+            <span matListItemTitle>
+              <div class="my-2">
+                <b>Title:</b><br />
+                {{ task.title }}
+              </div>
+            </span>
+
+            <span matListItemLine>
+              <div class="my-2">
+                <b> Description:</b><br />
+                {{ task.description }}
+              </div>
+            </span>
+
+            <p matListItemLine *ngIf="task.doneDate">
+              <b>Completed:</b><br />
+              {{ task.doneDate | date }}
+            </p>
+            <span matListItemLine *ngIf="task.startDate"
+              ><b>Created:</b><br />
+              {{ task.startDate | date }}</span
+            >
+            <button mat-icon-button [routerLink]="['edit', task.id]">
+              <mat-icon class="blue-icon">edit</mat-icon>
+            </button>
+            <button mat-icon-button (click)="onDeleteTask(task.id)">
+              <mat-icon class="red-icon">delete_forever</mat-icon>
+            </button>
+            <button mat-icon-button [routerLink]="['details', task.id]">
+              <mat-icon>search</mat-icon>
+            </button>
+            <button mat-icon-button [routerLink]="['status-change', task.id]">
+              <mat-icon class="yellow-icon">replay</mat-icon>
+            </button>
+            <span matListItemLine><hr /></span>
+          </mat-list-item>
+        </mat-list>
+        <ng-template #NO_TASK>
+          <mat-list>
+            <p>There is no Completed Task...</p>
+          </mat-list>
+        </ng-template>
+      </mat-card-content>
+    </mat-card>
+  </div>
+  <div class="col-md-4">
+    <router-outlet></router-outlet>
+  </div>
+</div>

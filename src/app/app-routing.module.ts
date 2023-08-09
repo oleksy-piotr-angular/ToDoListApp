@@ -2,6 +2,7 @@ import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { HomeComponent } from './components/home/home.component';
 import { SingleTaskComponent } from './components/tasks/single-task/single-task.component';
+import { ChangingStatusComponent } from './components/tasks/changing-status/changing-status.component';
 
 const routes: Routes = [
   { path: '', component: HomeComponent },
@@ -21,6 +22,10 @@ const routes: Routes = [
   },
   {
     path: 'todo-tasks/details/:id',
+    component: SingleTaskComponent,
+  },
+  {
+    path: 'done-tasks/details/:id',
     component: SingleTaskComponent,
   },
 ];

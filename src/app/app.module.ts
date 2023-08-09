@@ -19,6 +19,7 @@ import { appReducer } from './store/app.state';
 import { StoreRouterConnectingModule } from '@ngrx/router-store';
 import { CustomSerializer } from './store/router/custom-serializer';
 import { SingleTaskComponent } from './components/tasks/single-task/single-task.component';
+import { ChangingStatusComponent } from './components/tasks/changing-status/changing-status.component';
 
 @NgModule({
   declarations: [
@@ -27,6 +28,7 @@ import { SingleTaskComponent } from './components/tasks/single-task/single-task.
     HomeComponent,
     LoadingSpinnerComponent,
     SingleTaskComponent,
+    ChangingStatusComponent,
   ],
   imports: [
     BrowserModule,

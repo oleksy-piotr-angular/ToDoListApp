@@ -13,6 +13,8 @@ import {
   loadTasksSuccess,
   updateTask,
   updateTaskSuccess,
+  changeTaskStatus,
+  changeTaskStatusSuccess,
 } from './tasks.actions';
 import { Task } from 'src/app/models/task.model';
 import {
@@ -24,16 +26,8 @@ import {
 } from 'rxjs/operators';
 import { Router } from '@angular/router';
 import { setLoadingSpinner } from 'src/app/shared/shared.action';
-import {
-  RouterNavigatedAction,
-  ROUTER_NAVIGATION,
-  MinimalActivatedRouteSnapshot,
-  routerNavigatedAction,
-} from '@ngrx/router-store';
-import {
-  CustomSerializer,
-  RouterStateUrl,
-} from './../../../store/router/custom-serializer';
+import { RouterNavigatedAction, ROUTER_NAVIGATION } from '@ngrx/router-store';
+
 import { getRouterState } from 'src/app/store/router/router.selector';
 
 @Injectable()
@@ -82,7 +76,7 @@ export class TasksEffects {
         return this.tasksService.updateTask(action.task).pipe(
           map((data) => {
             this.store.dispatch(setLoadingSpinner({ status: false }));
-            this.router.navigate(['todo-tasks']);
+
             return updateTaskSuccess({ task: action.task });
           })
         );
@@ -95,9 +89,23 @@ export class TasksEffects {
       ofType(deleteTask),
       switchMap((action) => {
         return this.tasksService.deleteTask(action.id).pipe(
-          map((data) => {
+          map(() => {
             this.store.dispatch(setLoadingSpinner({ status: false }));
             return deleteTaskSuccess({ id: action.id });
+          })
+        );
+      })
+    );
+  });
+
+  changeTaskStatus$ = createEffect(() => {
+    return this.actions$.pipe(
+      ofType(changeTaskStatus),
+      switchMap((action) => {
+        return this.tasksService.changeTaskStatus(action.task).pipe(
+          map((data) => {
+            this.store.dispatch(setLoadingSpinner({ status: false }));
+            return changeTaskStatusSuccess({ task: action.task });
           })
         );
       })
