@@ -1,30 +1,49 @@
-import { Component } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import {
   FormBuilder,
   FormControl,
   FormGroup,
   Validators,
 } from '@angular/forms';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Store } from '@ngrx/store';
 import { Task } from './../../../../models/task.model';
 import { AppState } from 'src/app/store/app.state';
-import { Router } from '@angular/router';
-import { addTask } from '../../state/tasks.actions';
+import { getTaskById } from '../../state/tasks.selector';
+import { Subscription } from 'rxjs';
+import { updateTask } from '../../state/tasks.actions';
 import { setLoadingSpinner } from 'src/app/shared/shared.action';
 
 @Component({
-  selector: 'app-add-task',
-  templateUrl: './add-task.component.html',
-  styleUrls: ['./add-task.component.css'],
+  selector: 'app-edit-task',
+  templateUrl: './edit-task.component.html',
+  styleUrls: ['./edit-task.component.css'],
 })
-export class AddTaskComponent {
-  addDate: boolean;
-  taskForm: FormGroup<{
+export class EditTaskComponent implements OnDestroy, OnInit {
+  task: Task | undefined = undefined;
+
+  taskForm!: FormGroup<{
     title: FormControl<string | undefined>;
     description: FormControl<string | undefined>;
   }>;
-  constructor(private fb: FormBuilder, private store: Store<AppState>) {
-    this.addDate = true;
+
+  taskSubscription: Subscription = new Subscription();
+
+  constructor(private fb: FormBuilder, private store: Store<AppState>) {}
+  ngOnInit(): void {
+    this.createForm();
+    this.taskSubscription = this.store.select(getTaskById).subscribe((task) => {
+      if (task) {
+        this.task = task;
+        this.taskForm.patchValue({
+          title: task?.title,
+          description: task?.description,
+        });
+      }
+    });
+  }
+
+  createForm() {
     this.taskForm = this.fb.group({
       title: this.fb.nonNullable.control<string | undefined>(
         undefined,
@@ -35,6 +54,12 @@ export class AddTaskComponent {
         Validators.compose([Validators.required, Validators.minLength(10)])
       ),
     });
+  }
+
+  ngOnDestroy(): void {
+    if (this.taskSubscription) {
+      this.taskSubscription.unsubscribe();
+    }
   }
 
   get getTaskFormControl(): {
@@ -85,17 +110,22 @@ export class AddTaskComponent {
     }
   }
 
-  onAddTask() {
+  onEditTask() {
     if (this.taskForm.valid) {
       this.store.dispatch(setLoadingSpinner({ status: true }));
+      const title = this.taskForm.value.title;
+      const description = this.taskForm.value.description;
+
       const task: Task = {
-        title: this.taskForm.value.title,
-        description: this.taskForm.value.description,
-        isDone: false,
-        startDate: this.addDate ? new Date() : undefined,
+        id: this.task!.id,
+        title,
+        description,
+        startDate: this.task!.startDate,
+        isDone: true,
+        doneDate: this.task!.startDate ? new Date() : undefined,
       };
-      console.log(this.addDate);
-      this.store.dispatch(addTask({ task }));
+
+      this.store.dispatch(updateTask({ task }));
     }
   }
 }

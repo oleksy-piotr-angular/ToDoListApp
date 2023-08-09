@@ -12,21 +12,40 @@
     <h2 class="my-3">To Do Tasks:</h2>
     <mat-card>
       <mat-card-content>
-        <mat-selection-list *ngIf="tasks$ | async as tasks">
-          <mat-list-item
-            *ngFor="let task of tasks"
-            [routerLink]="['details', task.id]"
-          >
-            <span matListItemTitle>{{ task.title }}</span>
-            <span matListItemLine>{{ task.description }}</span>
+        <mat-list *ngIf="tasks$ | async as tasks">
+          <mat-list-item *ngFor="let task of tasks" class="my-5">
+            <span matListItemTitle>
+              <span>Title:</span><br />
+              {{ task.title }}</span
+            >
+
+            <span matListItemLine>
+              <span><b>Description:</b></span
+              ><br />
+              {{ task.description }}</span
+            >
+            <span
+              matListItemLine
+              *ngIf="task.startDate"
+              class="d-flex justify-content-end"
+              >Created:<br />
+              {{ task.startDate }}</span
+            >
             <button mat-icon-button [routerLink]="['edit', task.id]">
               <mat-icon class="blue-icon">edit</mat-icon>
             </button>
             <button mat-icon-button (click)="onDeleteTask(task.id)">
               <mat-icon class="red-icon">delete_forever</mat-icon>
             </button>
+            <button mat-icon-button [routerLink]="['details', task.id]">
+              <mat-icon>search</mat-icon>
+            </button>
+            <button mat-icon-button [routerLink]="['status-change', task.id]">
+              <mat-icon class="green-icon">done_outline</mat-icon>
+            </button>
+            <span matListItemLine><hr /></span>
           </mat-list-item>
-        </mat-selection-list>
+        </mat-list>
       </mat-card-content>
     </mat-card>
   </div>

@@ -15,6 +15,10 @@ export const getTasksToDo = createSelector(getTasksState, (state) => {
   return state.tasks.filter((task) => task.isDone === false);
 });
 
+export const getTasksDone = createSelector(getTasksState, (state) => {
+  return state.tasks.filter((task) => task.isDone === true);
+});
+
 export const getTaskById = createSelector(
   getTasks,
   getCurrentRoute,

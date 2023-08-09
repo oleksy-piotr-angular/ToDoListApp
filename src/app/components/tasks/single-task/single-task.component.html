@@ -3,5 +3,6 @@
   <div>Id: {{ taskData.id }}</div>
   <div>Title: {{ taskData.title }}</div>
   <div>Description: {{ taskData.description }}</div>
+  <div *ngIf="taskData.startDate">Created: {{ taskData.startDate }}</div>
 </div>
 <div><a [routerLink]="['/todo-tasks']">Back to TODO Tasks List</a></div>

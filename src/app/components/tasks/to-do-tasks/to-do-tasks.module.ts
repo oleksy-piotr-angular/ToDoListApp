@@ -13,6 +13,7 @@ import { tasksReducer } from '../state/tasks.reducer';
 import { TASKS_STATE_NAME } from '../state/tasks.selector';
 import { EffectsModule } from '@ngrx/effects';
 import { TasksEffects } from '../state/tasks.effects';
+import { FormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [EditTaskComponent, AddTaskComponent, ToDoTasksComponent],
@@ -21,6 +22,7 @@ import { TasksEffects } from '../state/tasks.effects';
     CommonModule,
     ToDoTasksRoutingModule,
     ReactiveFormsModule,
+    FormsModule,
     EffectsModule.forFeature([TasksEffects]),
     StoreModule.forFeature(TASKS_STATE_NAME, tasksReducer),
   ],

@@ -1,4 +1,4 @@
-<h3 class="my-3">New Task</h3>
+<h3 class="my-3">Edit Task</h3>
 <hr />
 <mat-card [formGroup]="taskForm">
   <mat-form-field>
@@ -19,20 +19,15 @@
     </div>
     <!-- ShowTitleErrors END-->
   </mat-form-field>
-  <div>
-    <mat-checkbox [(ngModel)]="addDate" [ngModelOptions]="{ standalone: true }">
-      Add Date (optional)
-    </mat-checkbox>
-  </div>
   <div class="my-3">
     <button
       [disabled]="!getTaskFormIsValid"
       type="submit"
       mat-raised-button
-      color="accent"
-      (click)="onAddTask()"
+      class="green-button"
+      (click)="onEditTask()"
     >
-      Create
+      Update
     </button>
   </div>
 </mat-card>

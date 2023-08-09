@@ -5,7 +5,9 @@ import {
   deleteTaskSuccess,
   loadTasksSuccess,
   updateTaskSuccess,
+  changeTaskStatusSuccess,
 } from './tasks.actions';
+import { state } from '@angular/animations';
 
 const _tasksReducer = createReducer(
   initialState,
@@ -18,12 +20,12 @@ const _tasksReducer = createReducer(
     };
   }),
   on(updateTaskSuccess, (state, action) => {
-    const updatedTask = state.tasks.map((task) => {
+    const updatedTasks = state.tasks.map((task) => {
       return task.id === action.task.id ? action.task : task;
     });
     return {
       ...state,
-      tasks: updatedTask,
+      tasks: updatedTasks,
     };
   }),
   on(deleteTaskSuccess, (state, { id }) => {
@@ -39,6 +41,15 @@ const _tasksReducer = createReducer(
     return {
       ...state,
       tasks: action.tasks,
+    };
+  }),
+  on(changeTaskStatusSuccess, (state, action) => {
+    const updatedTasks = state.tasks.map((task) => {
+      return task.id === action.task.id ? action.task : task;
+    });
+    return {
+      ...state,
+      tasks: updatedTasks,
     };
   })
 );

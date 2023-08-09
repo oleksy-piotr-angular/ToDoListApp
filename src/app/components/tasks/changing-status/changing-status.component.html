@@ -1,0 +1,32 @@
+<mat-card class="my-5" *ngIf="task">
+  <div *ngIf="task.isDone; else completeTask">
+    <p class="my-5 text-center">
+      Would you like to restore this task to uncompleted?
+    </p>
+    <div class="row">
+      <div class="my-3 d-flex justify-content-center">
+        <button
+          mat-raised-button
+          class="green-button"
+          (click)="onRestoreCompleted()"
+        >
+          Yes!
+        </button>
+      </div>
+    </div>
+  </div>
+  <ng-template #completeTask>
+    <p class="my-5 text-center">This task completed successfully?</p>
+    <div class="row">
+      <div class="my-3 d-flex justify-content-center">
+        <button
+          mat-raised-button
+          class="green-button"
+          (click)="onCompletedTask()"
+        >
+          Yes!
+        </button>
+      </div>
+    </div>
+  </ng-template>
+</mat-card>

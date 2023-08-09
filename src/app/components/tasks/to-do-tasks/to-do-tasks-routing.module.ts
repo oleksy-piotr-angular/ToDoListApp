@@ -3,6 +3,7 @@ import { RouterModule, Routes } from '@angular/router';
 import { ToDoTasksComponent } from './to-do-tasks.component';
 import { AddTaskComponent } from './add-task/add-task.component';
 import { EditTaskComponent } from './edit-task/edit-task.component';
+import { ChangingStatusComponent } from '../changing-status/changing-status.component';
 
 const routes: Routes = [
   {
@@ -11,6 +12,11 @@ const routes: Routes = [
     children: [
       { path: 'add', component: AddTaskComponent },
       { path: 'edit/:id', component: EditTaskComponent },
+
+      {
+        path: 'status-change/:id',
+        component: ChangingStatusComponent,
+      },
     ],
   },
 ];
