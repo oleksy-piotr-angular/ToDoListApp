@@ -116,6 +116,10 @@ export class TasksEffects {
     return this.actions$.pipe(
       ofType(ROUTER_NAVIGATION),
       filter((r: RouterNavigatedAction) => {
+        if (r.payload.routerState.url.startsWith('/done-tasks/details')) {
+          return r.payload.routerState.url.startsWith('/done-tasks/details');
+        }
+
         return r.payload.routerState.url.startsWith('/todo-tasks/details');
       }),
       withLatestFrom(this.store.select(getRouterState), (action, router) => {
