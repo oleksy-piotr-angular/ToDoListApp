@@ -3,6 +3,9 @@
   <mat-card>
     <mat-card-content>
       <div class="banner-content my-4">
+        <p *ngIf="taskData.isDone">
+          <mat-icon class="green-icon">check_circle</mat-icon>
+        </p>
         <p>
           Id: <b>{{ taskData.id }}</b>
         </p>
@@ -23,11 +26,11 @@
     </mat-card-content>
   </mat-card>
   <div class="my-3">
-    <ng-template *ngIf="taskData.isDone; else TODO_Back">
+    <div *ngIf="taskData.isDone; else TODO_Back">
       <a mat-raised-button [routerLink]="['/done-tasks']"
         >Back to Completed Tasks List</a
       >
-    </ng-template>
+    </div>
     <ng-template #TODO_Back>
       <a mat-raised-button [routerLink]="['/todo-tasks']"
         >Back to TODO Tasks List</a

@@ -5,13 +5,13 @@ import {
   FormGroup,
   Validators,
 } from '@angular/forms';
-import { ActivatedRoute, Router } from '@angular/router';
+import { Router } from '@angular/router';
 import { Store } from '@ngrx/store';
-import { Task } from './../../../../models/task.model';
+import { Task } from './../../../models/task.model';
 import { AppState } from 'src/app/store/app.state';
-import { getTaskById } from '../../state/tasks.selector';
+import { getTaskById } from './../state/tasks.selector';
 import { Subscription } from 'rxjs';
-import { updateTask } from '../../state/tasks.actions';
+import { updateTask } from './../state/tasks.actions';
 import { setLoadingSpinner } from 'src/app/shared/shared.action';
 
 @Component({
@@ -51,11 +51,7 @@ export class EditTaskComponent implements OnDestroy, OnInit {
     this.taskForm = this.fb.group({
       title: this.fb.nonNullable.control<string | undefined>(
         undefined,
-        Validators.compose([
-          Validators.required,
-          Validators.minLength(5),
-          Validators.maxLength(40),
-        ])
+        Validators.compose([Validators.required, Validators.minLength(5)])
       ),
       description: this.fb.nonNullable.control<string | undefined>(
         undefined,
@@ -104,9 +100,6 @@ export class EditTaskComponent implements OnDestroy, OnInit {
       if (titleForm.getError('minlength')) {
         return 'Title should be minimum 5 characters';
       }
-      if (titleForm.getError('maxlength')) {
-        return 'Title should be minimum 40 characters';
-      }
     }
   }
   showDescriptionErrors(): string | void {
@@ -132,11 +125,12 @@ export class EditTaskComponent implements OnDestroy, OnInit {
         title,
         description,
         startDate: this.task!.startDate,
-        isDone: this.task?.isDone,
+        isDone: true,
+        doneDate: this.task!.startDate ? new Date() : undefined,
       };
 
       this.store.dispatch(updateTask({ task }));
-      this.router.navigate(['todo-tasks']);
+      this.router.navigate(['done-tasks']);
     }
   }
 }
