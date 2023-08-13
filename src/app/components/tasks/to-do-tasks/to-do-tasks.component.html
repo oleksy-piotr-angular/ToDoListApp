@@ -29,7 +29,7 @@
             </span>
             <span matListItemLine *ngIf="task.startDate"
               ><b>Created:</b><br />
-              {{ task.startDate | date }}</span
+              {{ task.startDate | date : "short" }}</span
             >
             <button mat-icon-button [routerLink]="['edit', task.id]">
               <mat-icon class="blue-icon">edit</mat-icon>

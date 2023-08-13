@@ -17,10 +17,10 @@
           {{ taskData.description }}
         </p>
         <p *ngIf="taskData.startDate">
-          <b>Created: </b> {{ taskData.startDate }}
+          <b>Created: </b> {{ taskData.startDate | date : "short" }}
         </p>
         <p *ngIf="taskData.doneDate">
-          <b>Completed: </b> {{ taskData.doneDate }}
+          <b>Completed: </b> {{ taskData.doneDate | date : "short" }}
         </p>
       </div>
     </mat-card-content>
