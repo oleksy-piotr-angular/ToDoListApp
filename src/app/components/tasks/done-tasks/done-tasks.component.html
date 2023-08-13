@@ -5,12 +5,13 @@
     <mat-card>
       <mat-card-content>
         <mat-list *ngIf="tasks$ | async as tasks; else NO_TASK">
-          <mat-list-item *ngFor="let task of tasks" class="my-5">
+          <mat-list-item *ngFor="let task of tasks | latestOrder" class="my-5">
             <span matListItemTitle>
               <div class="my-2">
                 <b>Title:</b><br />
                 {{ task.title }}
               </div>
+              <mat-icon class="green-icon">check_circle</mat-icon>
             </span>
 
             <span matListItemLine>

@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Store } from '@ngrx/store';
-import { Observable, Subscription } from 'rxjs';
+import { Observable } from 'rxjs';
 import { Task } from 'src/app/models/task.model';
 import { AppState } from 'src/app/store/app.state';
 import { getTaskById } from '../state/tasks.selector';

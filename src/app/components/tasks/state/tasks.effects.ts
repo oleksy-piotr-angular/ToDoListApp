@@ -1,7 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
 import { Store } from '@ngrx/store';
-import { NotificationService } from 'src/app/services/notification.service';
 import { TasksService } from 'src/app/services/tasks.service';
 import { AppState } from 'src/app/store/app.state';
 import {
@@ -116,6 +115,10 @@ export class TasksEffects {
     return this.actions$.pipe(
       ofType(ROUTER_NAVIGATION),
       filter((r: RouterNavigatedAction) => {
+        if (r.payload.routerState.url.startsWith('/done-tasks/details')) {
+          return r.payload.routerState.url.startsWith('/done-tasks/details');
+        }
+
         return r.payload.routerState.url.startsWith('/todo-tasks/details');
       }),
       withLatestFrom(this.store.select(getRouterState), (action, router) => {
