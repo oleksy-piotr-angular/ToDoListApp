@@ -7,7 +7,6 @@ import {
   updateTaskSuccess,
   changeTaskStatusSuccess,
 } from './tasks.actions';
-import { state } from '@angular/animations';
 
 const _tasksReducer = createReducer(
   initialState,

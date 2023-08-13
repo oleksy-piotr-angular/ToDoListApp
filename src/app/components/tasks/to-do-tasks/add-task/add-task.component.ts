@@ -101,7 +101,6 @@ export class AddTaskComponent {
         isDone: false,
         startDate: this.addDate ? new Date() : undefined,
       };
-      console.log(this.addDate);
       this.store.dispatch(addTask({ task }));
     }
   }
