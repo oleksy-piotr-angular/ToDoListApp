@@ -38,6 +38,7 @@ import { ChangingStatusComponent } from './components/tasks/changing-status/chan
     HttpClientModule,
     ToastrModule.forRoot({
       tapToDismiss: true,
+      positionClass: 'toast-bottom-right',
       disableTimeOut: true,
     }),
     StoreModule.forRoot(appReducer),

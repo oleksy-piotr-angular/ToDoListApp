@@ -35,6 +35,7 @@ export class EditTaskComponent implements OnDestroy, OnInit {
     private router: Router
   ) {}
   ngOnInit(): void {
+    window.scrollTo(0, 0);
     this.createForm();
     this.taskSubscription = this.store.select(getTaskById).subscribe((task) => {
       if (task) {
