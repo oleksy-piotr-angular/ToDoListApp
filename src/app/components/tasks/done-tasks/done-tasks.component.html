@@ -1,10 +1,13 @@
 <div class="row py-4"></div>
 <div class="row">
   <div class="col-md-8">
-    <h2 class="my-3">Completed Tasks:</h2>
+    <h2 class="my-3">
+      Completed Tasks:
+      <hr />
+    </h2>
     <mat-card>
       <mat-card-content>
-        <mat-list *ngIf="tasks$ | async as tasks; else NO_TASK">
+        <mat-list *ngIf="tasks$ | async as tasks">
           <mat-list-item *ngFor="let task of tasks | latestOrder" class="my-5">
             <span matListItemTitle>
               <div class="my-2">
@@ -43,12 +46,10 @@
             </button>
             <span matListItemLine><hr /></span>
           </mat-list-item>
+          <mat-list-item *ngIf="tasks.length == 0">
+            There is no completed Tasks!
+          </mat-list-item>
         </mat-list>
-        <ng-template #NO_TASK>
-          <mat-list>
-            <p>There is no Completed Task...</p>
-          </mat-list>
-        </ng-template>
       </mat-card-content>
     </mat-card>
   </div>

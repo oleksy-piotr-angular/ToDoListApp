@@ -17,17 +17,25 @@ import {
 } from './tasks.actions';
 import { Task } from 'src/app/models/task.model';
 import {
+  catchError,
   filter,
   map,
   mergeMap,
+  repeat,
   switchMap,
   withLatestFrom,
 } from 'rxjs/operators';
 import { Router } from '@angular/router';
-import { setLoadingSpinner } from 'src/app/shared/shared.action';
+import {
+  setLoadingSpinner,
+  setErrorMessage,
+} from 'src/app/shared/shared.action';
 import { RouterNavigatedAction, ROUTER_NAVIGATION } from '@ngrx/router-store';
 
 import { getRouterState } from 'src/app/store/router/router.selector';
+import { of } from 'rxjs';
+import { HttpErrorResponse } from '@angular/common/http';
+import { NotificationService } from 'src/app/services/notification.service';
 
 @Injectable()
 export class TasksEffects {
@@ -35,7 +43,8 @@ export class TasksEffects {
     private actions$: Actions,
     private store: Store<AppState>,
     private tasksService: TasksService,
-    private router: Router
+    private router: Router,
+    private notification: NotificationService
   ) {}
 
   loadTasks = createEffect(() => {
@@ -45,10 +54,25 @@ export class TasksEffects {
         return this.tasksService.getTasks().pipe(
           map((tasks) => {
             this.store.dispatch(setLoadingSpinner({ status: false }));
+            this.store.dispatch(setErrorMessage({ message: '' }));
+            this.notification.showSuccess(
+              'The Tasks have been Loaded from DB',
+              'SUCCESS'
+            );
             return loadTasksSuccess({ tasks });
           })
         );
-      })
+      }),
+      catchError((errResp: HttpErrorResponse) => {
+        this.store.dispatch(setLoadingSpinner({ status: false }));
+        const errorMessage = this.tasksService.getErrorMessage(
+          errResp.statusText
+        );
+        console.log(errResp.statusText);
+
+        return of(setErrorMessage({ message: errorMessage }));
+      }),
+      repeat()
     );
   });
 
@@ -59,12 +83,28 @@ export class TasksEffects {
         return this.tasksService.addTask(action.task).pipe(
           map((data) => {
             this.store.dispatch(setLoadingSpinner({ status: false }));
+            this.store.dispatch(setErrorMessage({ message: '' }));
             const task = { ...action.task, id: data.name };
             this.router.navigate(['todo-tasks']);
+            this.notification.showSuccess(
+              'The Task has been Created',
+              'SUCCESS'
+            );
             return addTaskSuccess({ task });
           })
         );
-      })
+      }),
+      catchError((errResp: HttpErrorResponse) => {
+        this.store.dispatch(setLoadingSpinner({ status: false }));
+        const errorMessage = this.tasksService.getErrorMessage(
+          errResp.statusText
+        );
+        console.log(errResp.statusText);
+
+        this.router.navigate(['todo-tasks']);
+        return of(setErrorMessage({ message: errorMessage }));
+      }),
+      repeat()
     );
   });
 
@@ -75,11 +115,25 @@ export class TasksEffects {
         return this.tasksService.updateTask(action.task).pipe(
           map((data) => {
             this.store.dispatch(setLoadingSpinner({ status: false }));
-
+            this.store.dispatch(setErrorMessage({ message: '' }));
+            this.notification.showSuccess(
+              'The Task has been Updated',
+              'SUCCESS'
+            );
             return updateTaskSuccess({ task: action.task });
           })
         );
-      })
+      }),
+      catchError((errResp: HttpErrorResponse) => {
+        this.store.dispatch(setLoadingSpinner({ status: false }));
+        const errorMessage = this.tasksService.getErrorMessage(
+          errResp.statusText
+        );
+        console.log(errResp.statusText);
+
+        return of(setErrorMessage({ message: errorMessage }));
+      }),
+      repeat()
     );
   });
 
@@ -90,10 +144,24 @@ export class TasksEffects {
         return this.tasksService.deleteTask(action.id).pipe(
           map(() => {
             this.store.dispatch(setLoadingSpinner({ status: false }));
+            this.store.dispatch(setErrorMessage({ message: '' }));
+            this.notification.showSuccess(
+              'The Task has been Deleted',
+              'SUCCESS'
+            );
             return deleteTaskSuccess({ id: action.id });
           })
         );
-      })
+      }),
+      catchError((errResp: HttpErrorResponse) => {
+        this.store.dispatch(setLoadingSpinner({ status: false }));
+        const errorMessage = this.tasksService.getErrorMessage(
+          errResp.statusText
+        );
+        console.log(errResp.statusText);
+        return of(setErrorMessage({ message: errorMessage }));
+      }),
+      repeat()
     );
   });
 
@@ -104,10 +172,24 @@ export class TasksEffects {
         return this.tasksService.changeTaskStatus(action.task).pipe(
           map((data) => {
             this.store.dispatch(setLoadingSpinner({ status: false }));
+            this.store.dispatch(setErrorMessage({ message: '' }));
+            this.notification.showSuccess(
+              'The Task Status has been Changed',
+              'SUCCESS'
+            );
             return changeTaskStatusSuccess({ task: action.task });
           })
         );
-      })
+      }),
+      catchError((errResp: HttpErrorResponse) => {
+        this.store.dispatch(setLoadingSpinner({ status: false }));
+        const errorMessage = this.tasksService.getErrorMessage(
+          errResp.statusText
+        );
+        console.log(errResp.statusText);
+        return of(setErrorMessage({ message: errorMessage }));
+      }),
+      repeat()
     );
   });
 
@@ -127,11 +209,22 @@ export class TasksEffects {
       switchMap((id) => {
         return this.tasksService.getTaskById(id).pipe(
           map((task) => {
+            this.store.dispatch(setLoadingSpinner({ status: false }));
+            this.store.dispatch(setErrorMessage({ message: '' }));
             const taskData = [{ ...task, id }];
             return loadTasksSuccess({ tasks: taskData });
           })
         );
-      })
+      }),
+      catchError((errResp: HttpErrorResponse) => {
+        this.store.dispatch(setLoadingSpinner({ status: false }));
+        const errorMessage = this.tasksService.getErrorMessage(
+          errResp.statusText
+        );
+        console.log(errResp.statusText);
+        return of(setErrorMessage({ message: errorMessage }));
+      }),
+      repeat()
     );
   });
 }
