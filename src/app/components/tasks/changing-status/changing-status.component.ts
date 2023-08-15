@@ -19,6 +19,7 @@ export class ChangingStatusComponent implements OnDestroy {
   taskSubscription: Subscription = new Subscription();
 
   constructor(private store: Store<TasksState>, private router: Router) {
+    window.scrollTo(0, 0);
     this.taskSubscription = this.store.select(getTaskById).subscribe((task) => {
       if (task) {
         this.task = task;

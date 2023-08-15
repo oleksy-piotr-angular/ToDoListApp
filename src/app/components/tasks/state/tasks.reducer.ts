@@ -1,5 +1,5 @@
 import { createReducer, on } from '@ngrx/store';
-import { initialState } from './tasks.state';
+import { initialState, tasksAdapter } from './tasks.state';
 import {
   addTaskSuccess,
   deleteTaskSuccess,
@@ -11,45 +11,19 @@ import {
 const _tasksReducer = createReducer(
   initialState,
   on(addTaskSuccess, (state, action) => {
-    let task = { ...action.task };
-
-    return {
-      ...state,
-      tasks: [...state.tasks, task],
-    };
+    return tasksAdapter.addOne(action.task, state);
   }),
   on(updateTaskSuccess, (state, action) => {
-    const updatedTasks = state.tasks.map((task) => {
-      return task.id === action.task.id ? action.task : task;
-    });
-    return {
-      ...state,
-      tasks: updatedTasks,
-    };
+    return tasksAdapter.updateOne(action.task, state);
   }),
   on(deleteTaskSuccess, (state, { id }) => {
-    const updatedTask = state.tasks.filter((task) => {
-      return task.id !== id;
-    });
-    return {
-      ...state,
-      tasks: updatedTask,
-    };
+    return tasksAdapter.removeOne(id, state);
   }),
   on(loadTasksSuccess, (state, action) => {
-    return {
-      ...state,
-      tasks: action.tasks,
-    };
+    return tasksAdapter.setAll(action.tasks, state);
   }),
   on(changeTaskStatusSuccess, (state, action) => {
-    const updatedTasks = state.tasks.map((task) => {
-      return task.id === action.task.id ? action.task : task;
-    });
-    return {
-      ...state,
-      tasks: updatedTasks,
-    };
+    return tasksAdapter.updateOne(action.task, state);
   })
 );
 

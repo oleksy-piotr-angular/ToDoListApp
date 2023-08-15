@@ -4,8 +4,8 @@ import { Observable } from 'rxjs';
 import { Task } from 'src/app/models/task.model';
 import { setLoadingSpinner } from 'src/app/shared/shared.action';
 import { AppState } from 'src/app/store/app.state';
-import { getTasksDone } from '../state/tasks.selector';
 import { deleteTask, loadTasks } from '../state/tasks.actions';
+import { getTasksDone } from '../state/tasks.selector';
 
 @Component({
   selector: 'app-done-tasks',

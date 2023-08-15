@@ -1,5 +1,6 @@
 import { createAction, props } from '@ngrx/store';
 import { Task } from './../../../models/task.model';
+import { Update } from '@ngrx/entity';
 
 export const ADD_TASK_ACTION = '[todo tasks page] add task';
 export const ADD_TASK_SUCCESS = '[todo tasks page] add task success';
@@ -24,7 +25,7 @@ export const updateTask = createAction(
 
 export const updateTaskSuccess = createAction(
   UPDATE_TASK_SUCCESS,
-  props<{ task: Task }>()
+  props<{ task: Update<Task> }>()
 );
 
 export const deleteTask = createAction(
@@ -44,7 +45,7 @@ export const changeTaskStatus = createAction(
 
 export const changeTaskStatusSuccess = createAction(
   TASK_STATUS_SUCCESS,
-  props<{ task: Task }>()
+  props<{ task: Update<Task> }>()
 );
 
 export const loadTasks = createAction(LOAD_TASKS);

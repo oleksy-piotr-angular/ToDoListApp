@@ -36,6 +36,7 @@ import { getRouterState } from 'src/app/store/router/router.selector';
 import { of } from 'rxjs';
 import { HttpErrorResponse } from '@angular/common/http';
 import { NotificationService } from 'src/app/services/notification.service';
+import { Update } from '@ngrx/entity';
 
 @Injectable()
 export class TasksEffects {
@@ -120,7 +121,13 @@ export class TasksEffects {
               'The Task has been Updated',
               'SUCCESS'
             );
-            return updateTaskSuccess({ task: action.task });
+            const updatedTask: Update<Task> = {
+              id: action.task.id!,
+              changes: {
+                ...action.task,
+              },
+            };
+            return updateTaskSuccess({ task: updatedTask });
           })
         );
       }),
@@ -177,7 +184,13 @@ export class TasksEffects {
               'The Task Status has been Changed',
               'SUCCESS'
             );
-            return changeTaskStatusSuccess({ task: action.task });
+            const updatedTask: Update<Task> = {
+              id: action.task.id!,
+              changes: {
+                ...action.task,
+              },
+            };
+            return changeTaskStatusSuccess({ task: updatedTask });
           })
         );
       }),

@@ -2,10 +2,10 @@ import { Component, OnInit } from '@angular/core';
 import { Task } from './../../../models/task.model';
 import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
-import { getTasksToDo } from '../state/tasks.selector';
 import { AppState } from 'src/app/store/app.state';
 import { deleteTask, loadTasks } from '../state/tasks.actions';
 import { setLoadingSpinner } from 'src/app/shared/shared.action';
+import { getTasksToDo } from '../state/tasks.selector';
 
 @Component({
   selector: 'app-to-do-tasks',
@@ -19,8 +19,8 @@ export class ToDoTasksComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.tasks$ = this.store.select(getTasksToDo);
     this.store.dispatch(loadTasks());
+    this.tasks$ = this.store.select(getTasksToDo);
   }
 
   onDeleteTask(id: string | undefined) {
