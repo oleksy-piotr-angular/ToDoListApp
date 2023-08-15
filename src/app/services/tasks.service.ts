@@ -80,11 +80,6 @@ export class TasksService {
   }
 
   getErrorMessage(message: string) {
-    switch (message) {
-      case 'ERROR_TEST':
-        return 'Error test..';
-      default:
-        return 'unknown error.';
-    }
+    return message;
   }
 }

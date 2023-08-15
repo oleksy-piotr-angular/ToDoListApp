@@ -9,7 +9,11 @@
 </div>
 <div class="row">
   <div class="col-md-8">
-    <h2 class="my-3">To Do Tasks:</h2>
+    <h2 class="my-3">
+      To Do Tasks:
+      <hr />
+    </h2>
+
     <mat-card>
       <mat-card-content>
         <mat-list *ngIf="tasks$ | async as tasks">
@@ -44,6 +48,9 @@
               <mat-icon class="green-icon">done_outline</mat-icon>
             </button>
             <span matListItemLine><hr /></span>
+          </mat-list-item>
+          <mat-list-item *ngIf="tasks.length == 0">
+            Well done! All Tasks are completed!
           </mat-list-item>
         </mat-list>
       </mat-card-content>
