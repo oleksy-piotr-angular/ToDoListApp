@@ -14,6 +14,7 @@ import {
   updateTaskSuccess,
   changeTaskStatus,
   changeTaskStatusSuccess,
+  dummyAction,
 } from './tasks.actions';
 import { Task } from 'src/app/models/task.model';
 import {
@@ -37,6 +38,7 @@ import { of } from 'rxjs';
 import { HttpErrorResponse } from '@angular/common/http';
 import { NotificationService } from 'src/app/services/notification.service';
 import { Update } from '@ngrx/entity';
+import { getTasks } from './tasks.selector';
 
 @Injectable()
 export class TasksEffects {
@@ -51,18 +53,21 @@ export class TasksEffects {
   loadTasks = createEffect(() => {
     return this.actions$.pipe(
       ofType(loadTasks),
-      mergeMap((action) => {
-        return this.tasksService.getTasks().pipe(
-          map((tasks) => {
-            this.store.dispatch(setLoadingSpinner({ status: false }));
-            this.store.dispatch(setErrorMessage({ message: '' }));
-            this.notification.showSuccess(
-              'The Tasks have been Loaded from DB',
-              'SUCCESS'
-            );
-            return loadTasksSuccess({ tasks });
-          })
-        );
+      withLatestFrom(this.store.select(getTasks)),
+      mergeMap(([action, tasks]) => {
+        if (!tasks.length || tasks.length === 1) {
+          return this.tasksService.getTasks().pipe(
+            map((tasks) => {
+              this.store.dispatch(setErrorMessage({ message: '' }));
+              this.notification.showSuccess(
+                'The Tasks have been Loaded from DB',
+                'SUCCESS'
+              );
+              return loadTasksSuccess({ tasks });
+            })
+          );
+        }
+        return of(dummyAction());
       }),
       catchError((errResp: HttpErrorResponse) => {
         this.store.dispatch(setLoadingSpinner({ status: false }));
@@ -219,15 +224,19 @@ export class TasksEffects {
       withLatestFrom(this.store.select(getRouterState), (action, router) => {
         return router.state.params['id'];
       }),
-      switchMap((id) => {
-        return this.tasksService.getTaskById(id).pipe(
-          map((task) => {
-            this.store.dispatch(setLoadingSpinner({ status: false }));
-            this.store.dispatch(setErrorMessage({ message: '' }));
-            const taskData = [{ ...task, id }];
-            return loadTasksSuccess({ tasks: taskData });
-          })
-        );
+      withLatestFrom(this.store.select(getTasks)),
+      switchMap(([id, tasks]) => {
+        if (!tasks.length) {
+          return this.tasksService.getTaskById(id).pipe(
+            map((task) => {
+              this.store.dispatch(setLoadingSpinner({ status: false }));
+              this.store.dispatch(setErrorMessage({ message: '' }));
+              const taskData = [{ ...task, id }];
+              return loadTasksSuccess({ tasks: taskData });
+            })
+          );
+        }
+        return of(dummyAction());
       }),
       catchError((errResp: HttpErrorResponse) => {
         this.store.dispatch(setLoadingSpinner({ status: false }));

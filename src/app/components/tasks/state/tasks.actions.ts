@@ -53,3 +53,4 @@ export const loadTasksSuccess = createAction(
   LOAD_TASKS_SUCCESS,
   props<{ tasks: Task[] }>()
 );
+export const dummyAction = createAction('[dummy action]');

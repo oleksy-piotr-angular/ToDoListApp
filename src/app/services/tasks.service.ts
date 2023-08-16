@@ -2,14 +2,12 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable, map } from 'rxjs';
 import { Task } from '../models/task.model';
-import { Store } from '@ngrx/store';
-import { TasksState } from '../components/tasks/state/tasks.state';
 
 @Injectable({
   providedIn: 'root',
 })
 export class TasksService {
-  constructor(private http: HttpClient, private store: Store<TasksState>) {}
+  constructor(private http: HttpClient) {}
 
   getTasks(): Observable<Task[]> {
     return this.http
