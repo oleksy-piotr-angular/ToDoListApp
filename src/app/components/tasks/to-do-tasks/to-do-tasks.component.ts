@@ -14,9 +14,7 @@ import { getTasksToDo } from '../state/tasks.selector';
 })
 export class ToDoTasksComponent implements OnInit {
   tasks$: Observable<Task[]> = new Observable<[]>();
-  constructor(private store: Store<AppState>) {
-    this.store.dispatch(setLoadingSpinner({ status: true }));
-  }
+  constructor(private store: Store<AppState>) {}
 
   ngOnInit(): void {
     this.store.dispatch(loadTasks());
