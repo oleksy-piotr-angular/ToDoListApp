@@ -1,20 +1,41 @@
 # ToDoListApp
 
-Celem tego zadania jest stworzenie prostej aplikacji "To-Do List" (Lista Zadań) przy użyciu Angulara.
+App in Angular 15.2 with Firebase Realtime DB.
+This app presents a different concept of Tasks Management.
 
-Aby pobrać tą aplikację na swoim komputerze należy mieć zainstalowanego GIT
+If you want to check this application on live please visit this link:</br>
+https://oleksy-piotr-angular.github.io/ToDoListApp/
 
-Następnie sklonować na swój komputer tutejsze repozytorium.
+App works with:
 
-Jeśli masz zainstalowane Node Package Manager to wystarczy znajdując się w ścieżce tego projektu wpisać do terminala:
+<ul>
+<li>Router,</li>
+<li>Reactive Forms,</li> 
+<li>RxJS, Validators,</li>
+<li>Angular Materials,</li> 
+<li>Pipes,</li>
+<li>Service Injection,</li>
+<li>NgRX,</li>
+<li>ngx-toastr,</li>
+</ul>
+
+A condition management strategy such as NgRx was used here.
+To decrease the startup time, Lazy loading modules was used also here.
+
+The goal of this task is to create a simple To-Do List application using Angular.
+
+To initialize this application, you must have GIT installed on your computer
+
+Then clone the repository here to your computer.
+
+If you have Node Package Manager installed, just enter the following into the terminal in the path of this project:
 
 "npm install"
 
-Po zainstalowaniu pakietów, by odpalić Aplikację wpisać do termnala:
+After installing the packages, to run the Application, enter the following into the terminal:
 
 "ng serve --open"
 
-W razie potrzeby proszę o kontakt telefoniczny...
+If necessary, please contact me by phone from my CV...
 
-Ze względu na wersję demonstracyjną nie mogę odpowiadać za treść zawartości elementu "Task" znajdującej się w "githubPages" bo każdy może umieścić dowolną zawartość...
-https://oleksy-piotr-angular.github.io/ToDoListApp/
+Due to the demo version, I cannot be responsible for the content of the "Task" element located in "githubPages" because anyone can post any content...
