@@ -4,6 +4,7 @@ import { Observable, Subscription } from 'rxjs';
 import { AppState } from './store/app.state';
 import { getErrorMessage, getLoading } from './shared/shared.selector';
 import { NotificationService } from './services/notification.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-root',
@@ -17,10 +18,12 @@ export class AppComponent implements OnInit, OnDestroy {
 
   constructor(
     private store: Store<AppState>,
+    private router: Router,
     private notification: NotificationService
   ) {}
 
   ngOnInit(): void {
+    this.router.navigate(['']);
     this.showLoading = this.store.select(getLoading);
     this.errorMessage = this.store
       .select(getErrorMessage)
