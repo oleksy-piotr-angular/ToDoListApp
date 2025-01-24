@@ -1,5 +1,13 @@
 # ToDoListApp
 
+<p>
+<i>
+  <b>Unfortunately, because Github Pages is best used to display
+static pages, refreshing the page "To Do" and "Done" always displays
+404 Github pages!</b>
+</i>
+</p>
+
 App in Angular 15.2 with Firebase Realtime DB.
 This app presents a different concept of Tasks Management.
 
