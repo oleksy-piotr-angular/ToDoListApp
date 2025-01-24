@@ -3,8 +3,8 @@
 <p>
 <i>
   <b>Unfortunately, because Github Pages is best used to display
-static pages, refreshing the page "To Do" and "Done" always displays
-404 Github pages!</b>
+static pages, refreshing the page "To Do" and "Completed" always displays
+404 Github pages error!</b>
 </i>
 </p>
 
